@@ -68,5 +68,7 @@
 	<string>Light</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
+	<key>NMFClientId</key>
+	<string>80itgn2ez0</string>
 </dict>
 </plist>
