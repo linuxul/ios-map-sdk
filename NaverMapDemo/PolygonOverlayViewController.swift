@@ -41,7 +41,7 @@ class PolygonOverlayViewController: MapViewController {
 
         let polygon = NMGPolygon(ring: NMGLineString(points: coords1))
         let polygonOverlay = NMFPolygonOverlay(polygon as! NMGPolygon<AnyObject>)
-        polygonOverlay?.fillColor = UIColor(red: 25.0/255.0, green: 192.0/255.0, blue: 46.0/255.0, alpha: 31.0/255.0)
+        polygonOverlay?.fillColor = .clear
         polygonOverlay?.outlineColor = primaryColor
         polygonOverlay?.outlineWidth = 3
         polygonOverlay?.mapView = mapView
