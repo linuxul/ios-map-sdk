@@ -20,8 +20,19 @@ import NMapsMap
 
 class PolygonOverlayViewController: MapViewController {
 
+    // 1. 마커를 변수로 설정
+    var centralMarker: NMFMarker?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        centralMarker = NMFMarker()
+//        centralMarker?.iconImage = NMFOverlayImage(name: "pointer") // 대여 아이콘 이미지 설정
+        centralMarker?.position = mapView.cameraPosition.target      // 초기 중앙 좌표 설정
+        centralMarker?.mapView = mapView
+        
+        // 2. 카메라 이동 이벤트 리스너 설정
+        mapView.addCameraDelegate(delegate: self)
 
         DispatchQueue.global(qos: .default).async {
             // 백그라운드 스레드
@@ -146,4 +157,13 @@ class PolygonOverlayViewController: MapViewController {
         }
     }
 
+}
+
+extension PolygonOverlayViewController: NMFMapViewCameraDelegate {
+    
+    func mapView(_ mapView: NMFMapView, cameraDidChangeByReason reason: Int, animated: Bool) {
+        // 카메라가 움직일 때마다 지도 중앙 좌표로 마커의 위치를 업데이트
+        let centerLatLng = mapView.cameraPosition.target
+        centralMarker?.position = centerLatLng
+    }
 }
