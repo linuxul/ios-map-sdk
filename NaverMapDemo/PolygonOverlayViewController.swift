@@ -22,6 +22,8 @@ class PolygonOverlayViewController: MapViewController {
 
     // 1. 마커를 변수로 설정
     var centralMarker: NMFMarker?
+    var polyline: NMFPolylineOverlay?
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -156,6 +158,44 @@ class PolygonOverlayViewController: MapViewController {
             }
         }
     }
+    
+    
+    // 두 좌표 사이의 유클리드 거리 계산 함수
+    func calculateDistance(from: NMGLatLng, to: NMGLatLng) -> Double {
+        let latDiff = from.lat - to.lat
+        let lngDiff = from.lng - to.lng
+        return sqrt(latDiff * latDiff + lngDiff * lngDiff)
+    }
+
+    // 중앙 좌표에서 가장 가까운 마커 찾기
+    func findNearestMarker(from center: NMGLatLng, markers: [(Double, Double)]) -> NMGLatLng {
+        var nearestMarker: NMGLatLng = NMGLatLng(lat: markers[0].0, lng: markers[0].1)
+        var minDistance = calculateDistance(from: center, to: nearestMarker)
+
+        for (latitude, longitude) in markers {
+            let markerLatLng = NMGLatLng(lat: latitude, lng: longitude)
+            let distance = calculateDistance(from: center, to: markerLatLng)
+            
+            if distance < minDistance {
+                nearestMarker = markerLatLng
+                minDistance = distance
+            }
+        }
+
+        return nearestMarker
+    }
+
+    // 두 좌표 사이에 라인을 그리는 함수
+    func drawLine(from start: NMGLatLng, to end: NMGLatLng) {
+        polyline?.mapView = nil // 기존 라인을 제거
+
+        // 새로운 라인 생성
+        let path = NMGLineString(points: [start, end])
+        polyline = NMFPolylineOverlay(path as! NMGLineString<AnyObject>)
+        polyline?.color = UIColor.red // 라인의 색상 설정
+        polyline?.width = 4.0 // 라인의 두께 설정
+        polyline?.mapView = mapView // 지도에 라인 추가
+    }
 
 }
 
@@ -165,5 +205,11 @@ extension PolygonOverlayViewController: NMFMapViewCameraDelegate {
         // 카메라가 움직일 때마다 지도 중앙 좌표로 마커의 위치를 업데이트
         let centerLatLng = mapView.cameraPosition.target
         centralMarker?.position = centerLatLng
+        
+        // 가장 가까운 마커 찾기
+        let nearestMarkerPosition = findNearestMarker(from: centerLatLng, markers: JinJuMapData().chilamdongMarkers)
+        
+        // 경로 그리기
+        drawLine(from: centerLatLng, to: nearestMarkerPosition)
     }
 }
