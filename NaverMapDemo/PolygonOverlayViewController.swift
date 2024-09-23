@@ -19,501 +19,131 @@ import UIKit
 import NMapsMap
 
 class PolygonOverlayViewController: MapViewController {
-    
-    let munsaneup = [
-        NMGLatLng(lat: 35.12846902798059, lng: 128.24737365150924),
-        NMGLatLng(lat: 35.127255226536604, lng: 128.24669430113374),
-        NMGLatLng(lat: 35.126919843473594, lng: 128.24612411870075),
-        NMGLatLng(lat: 35.126794893554944, lng: 128.2455901402742),
-        NMGLatLng(lat: 35.12677686291235, lng: 128.24551308158146),
-        NMGLatLng(lat: 35.126148116450196, lng: 128.24253526095166),
-        NMGLatLng(lat: 35.12650733562755, lng: 128.24117732171626),
-        NMGLatLng(lat: 35.12731338793052, lng: 128.24032746208883),
-        NMGLatLng(lat: 35.128596478043605, lng: 128.23914314972157),
-        NMGLatLng(lat: 35.12973951295121, lng: 128.23813499827037),
-        NMGLatLng(lat: 35.12996454595402, lng: 128.23797413308048),
-        NMGLatLng(lat: 35.130103559882926, lng: 128.2378632376974),
-        NMGLatLng(lat: 35.1301567864469, lng: 128.23781196693128),
-        NMGLatLng(lat: 35.130260329802084, lng: 128.23771222742505),
-        NMGLatLng(lat: 35.130740953149136, lng: 128.23718594087973),
-        NMGLatLng(lat: 35.1307955771462, lng: 128.23711642128316),
-        NMGLatLng(lat: 35.13195424707139, lng: 128.23489065636704),
-        NMGLatLng(lat: 35.131994229833246, lng: 128.2347852854924),
-        NMGLatLng(lat: 35.1324531200205, lng: 128.23321028208773),
-        NMGLatLng(lat: 35.132460125302316, lng: 128.23317511155236),
-        NMGLatLng(lat: 35.13244540658212, lng: 128.23312850563963),
-        NMGLatLng(lat: 35.132387286342436, lng: 128.23305894494914),
-        NMGLatLng(lat: 35.1320345273263, lng: 128.23265228789623),
-        NMGLatLng(lat: 35.131535647107896, lng: 128.23208553209776),
-        NMGLatLng(lat: 35.13132918981397, lng: 128.23183481071885),
-        NMGLatLng(lat: 35.13126933973823, lng: 128.23174771331085),
-        NMGLatLng(lat: 35.1312392617777, lng: 128.2316809507893),
-        NMGLatLng(lat: 35.13123041644824, lng: 128.23162607970286),
-        NMGLatLng(lat: 35.13123391724835, lng: 128.23150920174194),
-        NMGLatLng(lat: 35.1312516234238, lng: 128.2314162104491),
-        NMGLatLng(lat: 35.13239875326879, lng: 128.22927789397536),
-        NMGLatLng(lat: 35.1337181140533, lng: 128.2284706386438),
-        NMGLatLng(lat: 35.13376441871137, lng: 128.22846604041075),
-        NMGLatLng(lat: 35.13388811447195, lng: 128.22844118321441),
-        NMGLatLng(lat: 35.1355539423518, lng: 128.22793311547144),
-        NMGLatLng(lat: 35.13570963703604, lng: 128.22787920804248),
-        NMGLatLng(lat: 35.135863405268104, lng: 128.2278259671087),
-        NMGLatLng(lat: 35.13594919607689, lng: 128.2277949644009),
-        NMGLatLng(lat: 35.136035890270165, lng: 128.2277449109957),
-        NMGLatLng(lat: 35.13609081474601, lng: 128.22771319879502),
-        NMGLatLng(lat: 35.13620759334263, lng: 128.22760950890563),
-        NMGLatLng(lat: 35.13630275005175, lng: 128.22748989026024),
-        NMGLatLng(lat: 35.136350094426646, lng: 128.22739694849602),
-        NMGLatLng(lat: 35.136385879909994, lng: 128.2272999401532),
-        NMGLatLng(lat: 35.136390974184316, lng: 128.2272696449031),
-        NMGLatLng(lat: 35.13640178741427, lng: 128.22720532678738),
-        NMGLatLng(lat: 35.13640776450685, lng: 128.2271126546711),
-        NMGLatLng(lat: 35.1363761125917, lng: 128.22694124290635),
-        NMGLatLng(lat: 35.136268081358324, lng: 128.2266508507014),
-        NMGLatLng(lat: 35.13609701021297, lng: 128.22628502127668),
-        NMGLatLng(lat: 35.13594420807254, lng: 128.22602532465402),
-        NMGLatLng(lat: 35.13576296209461, lng: 128.2256501500592),
-        NMGLatLng(lat: 35.135697253541075, lng: 128.22549321032363),
-        NMGLatLng(lat: 35.13563906132071, lng: 128.22531382789384),
-        NMGLatLng(lat: 35.13561703078139, lng: 128.22523898539086),
-        NMGLatLng(lat: 35.135608802237336, lng: 128.22516599631717),
-        NMGLatLng(lat: 35.13561476912548, lng: 128.2250420647356),
-        NMGLatLng(lat: 35.13561672951336, lng: 128.22501838704287),
-        NMGLatLng(lat: 35.13562231093129, lng: 128.2249510306394),
-        NMGLatLng(lat: 35.13564748220998, lng: 128.2248143992267),
-        NMGLatLng(lat: 35.13567122906746, lng: 128.22472323426743),
-        NMGLatLng(lat: 35.135727148245046, lng: 128.224574353076),
-        NMGLatLng(lat: 35.13668516711359, lng: 128.2223392166041),
-        NMGLatLng(lat: 35.138538436181115, lng: 128.21850017989672),
-        NMGLatLng(lat: 35.13916423226613, lng: 128.21735754292945),
-        NMGLatLng(lat: 35.13919519540159, lng: 128.21731509854064),
-        NMGLatLng(lat: 35.13921308503069, lng: 128.2172905878819),
-        NMGLatLng(lat: 35.13994793338479, lng: 128.21668871217798),
-        NMGLatLng(lat: 35.14038750135279, lng: 128.21653373058453),
-        NMGLatLng(lat: 35.14088998939135, lng: 128.21607093635944),
-        NMGLatLng(lat: 35.14199995129133, lng: 128.21416960637768),
-        NMGLatLng(lat: 35.14355382768009, lng: 128.21134070121136),
-        NMGLatLng(lat: 35.143575726709805, lng: 128.21127059431998),
-        NMGLatLng(lat: 35.143581114546706, lng: 128.21122186539654),
-        NMGLatLng(lat: 35.143583460129584, lng: 128.2112006199397),
-        NMGLatLng(lat: 35.14358686600348, lng: 128.21111532375022),
-        NMGLatLng(lat: 35.143538876131885, lng: 128.2105843632985),
-        NMGLatLng(lat: 35.14349272463203, lng: 128.2103205816881),
-        NMGLatLng(lat: 35.143454846368385, lng: 128.21013638087564),
-        NMGLatLng(lat: 35.141611474533306, lng: 128.20573622367408),
-        NMGLatLng(lat: 35.140562103853846, lng: 128.20382236665742),
-        NMGLatLng(lat: 35.13923482691543, lng: 128.20234898522367),
-        NMGLatLng(lat: 35.13698658765472, lng: 128.19966596102597),
-        NMGLatLng(lat: 35.136911468250396, lng: 128.1995631215425),
-        NMGLatLng(lat: 35.13683965827829, lng: 128.1994322693945),
-        NMGLatLng(lat: 35.13679267649861, lng: 128.1992925103301),
-        NMGLatLng(lat: 35.136763548361024, lng: 128.1991827366047),
-        NMGLatLng(lat: 35.13675225987211, lng: 128.1990836618961),
-        NMGLatLng(lat: 35.13675702920312, lng: 128.19903750933003),
-        NMGLatLng(lat: 35.13677107133912, lng: 128.19890166617736),
-        NMGLatLng(lat: 35.136788445860255, lng: 128.19879931290401),
-        NMGLatLng(lat: 35.136798387498835, lng: 128.19874076127792),
-        NMGLatLng(lat: 35.13681002353365, lng: 128.1987033005319),
-        NMGLatLng(lat: 35.13683175741666, lng: 128.19863335808424),
-        NMGLatLng(lat: 35.13685959959736, lng: 128.19855023861706),
-        NMGLatLng(lat: 35.136892083980186, lng: 128.1984971032912),
-        NMGLatLng(lat: 35.136938240602746, lng: 128.1984216350564),
-        NMGLatLng(lat: 35.13698654990894, lng: 128.19834844962426),
-        NMGLatLng(lat: 35.137012752960224, lng: 128.19830877069006),
-        NMGLatLng(lat: 35.13707588064959, lng: 128.1982044597039),
-        NMGLatLng(lat: 35.137138946205965, lng: 128.1980778915197),
-        NMGLatLng(lat: 35.13717368644352, lng: 128.1979635444146),
-        NMGLatLng(lat: 35.137281268003605, lng: 128.19757680951835),
-        NMGLatLng(lat: 35.13736158863618, lng: 128.1972263434386),
-        NMGLatLng(lat: 35.137416629511115, lng: 128.19685416204362),
-        NMGLatLng(lat: 35.137419806119574, lng: 128.19654394706785),
-        NMGLatLng(lat: 35.137408111885684, lng: 128.19639977680916),
-        NMGLatLng(lat: 35.137385565793764, lng: 128.19630106794747),
-        NMGLatLng(lat: 35.13736179512951, lng: 128.19619701947502),
-        NMGLatLng(lat: 35.13727840390764, lng: 128.1960863769148),
-        NMGLatLng(lat: 35.135832234150065, lng: 128.19448847735868),
-        NMGLatLng(lat: 35.135680400828896, lng: 128.19434360767985),
-        NMGLatLng(lat: 35.135533977697, lng: 128.19421822834877),
-        NMGLatLng(lat: 35.13543577121018, lng: 128.1941694974164),
-        NMGLatLng(lat: 35.13517321469293, lng: 128.19414147396475),
-        NMGLatLng(lat: 35.135035704153545, lng: 128.19412481457107),
-        NMGLatLng(lat: 35.13494039463014, lng: 128.1941132651331),
-        NMGLatLng(lat: 35.13485575379616, lng: 128.1940834953242),
-        NMGLatLng(lat: 35.13473859100141, lng: 128.19403220464685),
-        NMGLatLng(lat: 35.134563434336854, lng: 128.19390501501297),
-        NMGLatLng(lat: 35.1342828135575, lng: 128.19365937847206),
-        NMGLatLng(lat: 35.13409655664805, lng: 128.19348852223834),
-        NMGLatLng(lat: 35.1339790044343, lng: 128.19337601777485),
-        NMGLatLng(lat: 35.13356255669447, lng: 128.19296604907544),
-        NMGLatLng(lat: 35.133412292522515, lng: 128.19280361889014),
-        NMGLatLng(lat: 35.13302060837196, lng: 128.19236281168708),
-        NMGLatLng(lat: 35.13295406071018, lng: 128.19226373129968),
-        NMGLatLng(lat: 35.13290323355619, lng: 128.1921833822063),
-        NMGLatLng(lat: 35.13288297896341, lng: 128.19212017113645),
-        NMGLatLng(lat: 35.132851528754976, lng: 128.1919871730603),
-        NMGLatLng(lat: 35.13283463528577, lng: 128.19187158244702),
-        NMGLatLng(lat: 35.13284649230983, lng: 128.1917708696225),
-        NMGLatLng(lat: 35.13290464566518, lng: 128.19159979015228),
-        NMGLatLng(lat: 35.13295931485961, lng: 128.19146944007014),
-        NMGLatLng(lat: 35.13305873637795, lng: 128.19129797575178),
-        NMGLatLng(lat: 35.133124615773376, lng: 128.1912012018809),
-        NMGLatLng(lat: 35.133189533162735, lng: 128.1911426587821),
-        NMGLatLng(lat: 35.13329609877622, lng: 128.19104656208583),
-        NMGLatLng(lat: 35.133537929368686, lng: 128.1908457876286),
-        NMGLatLng(lat: 35.13439871294547, lng: 128.19028340066208),
-        NMGLatLng(lat: 35.13514616336812, lng: 128.1898198863222),
-        NMGLatLng(lat: 35.13530901345908, lng: 128.1897089831937),
-        NMGLatLng(lat: 35.135496763335794, lng: 128.1895760016883),
-        NMGLatLng(lat: 35.135674896096255, lng: 128.18944608768248),
-        NMGLatLng(lat: 35.135823898240574, lng: 128.1893252269509),
-        NMGLatLng(lat: 35.135896825389466, lng: 128.18920644574476),
-        NMGLatLng(lat: 35.13599615745109, lng: 128.18901970330617),
-        NMGLatLng(lat: 35.136416960349095, lng: 128.18815684265584),
-        NMGLatLng(lat: 35.13653700864042, lng: 128.18783438376738),
-        NMGLatLng(lat: 35.136636784428944, lng: 128.1874716401848),
-        NMGLatLng(lat: 35.13680359396171, lng: 128.18694418880196),
-        NMGLatLng(lat: 35.13689339312879, lng: 128.1866809512213),
-        NMGLatLng(lat: 35.13695302656917, lng: 128.18650615205328),
-        NMGLatLng(lat: 35.13702839310437, lng: 128.18628525930944),
-        NMGLatLng(lat: 35.137666121771474, lng: 128.18462143802654),
-        NMGLatLng(lat: 35.13771043385102, lng: 128.184509429011),
-        NMGLatLng(lat: 35.13771558120525, lng: 128.18449642061003),
-        NMGLatLng(lat: 35.13782438927869, lng: 128.18437944634636),
-        NMGLatLng(lat: 35.1387800433216, lng: 128.18383894682046),
-        NMGLatLng(lat: 35.14116411616457, lng: 128.1825003552166),
-        NMGLatLng(lat: 35.141284012035456, lng: 128.1824380310397),
-        NMGLatLng(lat: 35.14139755811917, lng: 128.18241349044516),
-        NMGLatLng(lat: 35.141400666400685, lng: 128.18241282920548),
-        NMGLatLng(lat: 35.141471680564266, lng: 128.1823986189374),
-        NMGLatLng(lat: 35.14262939523855, lng: 128.18277964149993),
-        NMGLatLng(lat: 35.142717659576945, lng: 128.18281157128473),
-        NMGLatLng(lat: 35.14278809909554, lng: 128.1828719795057),
-        NMGLatLng(lat: 35.143152030530565, lng: 128.18321519728948),
-        NMGLatLng(lat: 35.143286336261504, lng: 128.18334822881963),
-        NMGLatLng(lat: 35.143320267980606, lng: 128.18338183937772),
-        NMGLatLng(lat: 35.14339328613299, lng: 128.18343520160533),
-        NMGLatLng(lat: 35.14352117727857, lng: 128.18348856271496),
-        NMGLatLng(lat: 35.143652736162124, lng: 128.1835375109036),
-        NMGLatLng(lat: 35.143722039708514, lng: 128.18354954992944),
-        NMGLatLng(lat: 35.14380741295699, lng: 128.18356437883935),
-        NMGLatLng(lat: 35.14391772766291, lng: 128.18357114243898),
-        NMGLatLng(lat: 35.14405077090659, lng: 128.18357929706488),
-        NMGLatLng(lat: 35.1442447695213, lng: 128.18357075819196),
-        NMGLatLng(lat: 35.14448213445718, lng: 128.18352482823616),
-        NMGLatLng(lat: 35.144579017576426, lng: 128.18349543729005),
-        NMGLatLng(lat: 35.14474824943899, lng: 128.18342450074528),
-        NMGLatLng(lat: 35.14487180487556, lng: 128.1833554523182),
-        NMGLatLng(lat: 35.145004204366394, lng: 128.18327325369756),
-        NMGLatLng(lat: 35.145205556637585, lng: 128.18311432490597),
-        NMGLatLng(lat: 35.14534128371226, lng: 128.182992690061),
-        NMGLatLng(lat: 35.145496022062865, lng: 128.18282994437155),
-        NMGLatLng(lat: 35.14566895507535, lng: 128.18262279936826),
-        NMGLatLng(lat: 35.14576103533905, lng: 128.18249787300488),
-        NMGLatLng(lat: 35.14581967090278, lng: 128.18240105397646),
-        NMGLatLng(lat: 35.145870618693394, lng: 128.18222781125596),
-        NMGLatLng(lat: 35.145900153146854, lng: 128.18207674627925),
-        NMGLatLng(lat: 35.145967300954695, lng: 128.18167937700895),
-        NMGLatLng(lat: 35.1460135085253, lng: 128.18139371462948),
-        NMGLatLng(lat: 35.14601546369539, lng: 128.1813494073367),
-        NMGLatLng(lat: 35.14602132340856, lng: 128.18121653699305),
-        NMGLatLng(lat: 35.14598095512446, lng: 128.18064371898177),
-        NMGLatLng(lat: 35.14608794644535, lng: 128.17998123735367),
-        NMGLatLng(lat: 35.146095967188856, lng: 128.1798499293568),
-        NMGLatLng(lat: 35.14609685292167, lng: 128.1797143903696),
-        NMGLatLng(lat: 35.14609101089825, lng: 128.17963576573038),
-        NMGLatLng(lat: 35.14604306444538, lng: 128.17946571554114),
-        NMGLatLng(lat: 35.14599939243937, lng: 128.17937661316046),
-        NMGLatLng(lat: 35.14566346585246, lng: 128.1787262067703),
-        NMGLatLng(lat: 35.145455987071756, lng: 128.17834137830047),
-        NMGLatLng(lat: 35.13928916085476, lng: 128.16934537531486),
-        NMGLatLng(lat: 35.13735442643397, lng: 128.16952717845507),
-        NMGLatLng(lat: 35.13558131261266, lng: 128.1696937731445),
-        NMGLatLng(lat: 35.13547719234479, lng: 128.1694495764661),
-        NMGLatLng(lat: 35.1354532668553, lng: 128.16933982346796),
-        NMGLatLng(lat: 35.135259811169504, lng: 128.16735933484338),
-        NMGLatLng(lat: 35.134929576484225, lng: 128.16411811630581),
-        NMGLatLng(lat: 35.134772493992244, lng: 128.16373995548395),
-        NMGLatLng(lat: 35.13446997702781, lng: 128.1637904868598),
-        NMGLatLng(lat: 35.13302385850759, lng: 128.16384951152398),
-        NMGLatLng(lat: 35.13288830857684, lng: 128.16383872257904),
-        NMGLatLng(lat: 35.132828218660855, lng: 128.16380290459028),
-        NMGLatLng(lat: 35.132788716635794, lng: 128.16375009242574),
-        NMGLatLng(lat: 35.13274683472925, lng: 128.16367592324593),
-        NMGLatLng(lat: 35.132710531006246, lng: 128.1635878684008),
-        NMGLatLng(lat: 35.13234500723131, lng: 128.16239570194273),
-        NMGLatLng(lat: 35.13221370782701, lng: 128.16137067331223),
-        NMGLatLng(lat: 35.13221226994419, lng: 128.16130980447178),
-        NMGLatLng(lat: 35.132211667709306, lng: 128.16128400676897),
-        NMGLatLng(lat: 35.132229421407445, lng: 128.1611676506232),
-        NMGLatLng(lat: 35.132711959970806, lng: 128.15953601726423),
-        NMGLatLng(lat: 35.133524983181765, lng: 128.15798800848472),
-        NMGLatLng(lat: 35.13584192479835, lng: 128.15288658654023),
-        NMGLatLng(lat: 35.13904521979925, lng: 128.14835497400819),
-        NMGLatLng(lat: 35.13933072186382, lng: 128.14545866017622),
-        NMGLatLng(lat: 35.13949182906775, lng: 128.14318556043423),
-        NMGLatLng(lat: 35.13951857295681, lng: 128.14306556238913),
-        NMGLatLng(lat: 35.13985016484233, lng: 128.14170577481653),
-        NMGLatLng(lat: 35.139927723694655, lng: 128.1415324696633),
-        NMGLatLng(lat: 35.14011775510284, lng: 128.1411329409483),
-        NMGLatLng(lat: 35.140203139475986, lng: 128.14095955112663),
-        NMGLatLng(lat: 35.140264510143204, lng: 128.14085422920982),
-        NMGLatLng(lat: 35.140366120567066, lng: 128.14075735771252),
-        NMGLatLng(lat: 35.14051124504648, lng: 128.14066958239738),
-        NMGLatLng(lat: 35.1406838708073, lng: 128.14058636045962),
-        NMGLatLng(lat: 35.140839444172805, lng: 128.14054719048062),
-        NMGLatLng(lat: 35.14105510865518, lng: 128.1404299262459),
-        NMGLatLng(lat: 35.14116482168275, lng: 128.14035689920067),
-        NMGLatLng(lat: 35.14125088313272, lng: 128.14027940447312),
-        NMGLatLng(lat: 35.1412781143136, lng: 128.1402311602996),
-        NMGLatLng(lat: 35.14210385439576, lng: 128.13819645622644),
-        NMGLatLng(lat: 35.142134487495746, lng: 128.1380667591808),
-        NMGLatLng(lat: 35.14214109754154, lng: 128.13789418752282),
-        NMGLatLng(lat: 35.14210045046823, lng: 128.13771740291673),
-        NMGLatLng(lat: 35.142012197071764, lng: 128.13748845773713),
-        NMGLatLng(lat: 35.14184107281076, lng: 128.13722680419644),
-        NMGLatLng(lat: 35.14161090486901, lng: 128.13691496734722),
-        NMGLatLng(lat: 35.141468700611185, lng: 128.13680586940134),
-        NMGLatLng(lat: 35.14107321876022, lng: 128.13644214048287),
-        NMGLatLng(lat: 35.14071307420261, lng: 128.13607880527087),
-        NMGLatLng(lat: 35.14063759154218, lng: 128.13598381994572),
-        NMGLatLng(lat: 35.140621385779966, lng: 128.13592649673117),
-        NMGLatLng(lat: 35.14062478517391, lng: 128.13584505302387),
-        NMGLatLng(lat: 35.14094112658433, lng: 128.13390072712005),
-        NMGLatLng(lat: 35.14096825213448, lng: 128.13383823377626),
-        NMGLatLng(lat: 35.14113674501037, lng: 128.13371661219367),
-        NMGLatLng(lat: 35.14143842048111, lng: 128.1335170200278),
-        NMGLatLng(lat: 35.141778296986715, lng: 128.13331281429183),
-        NMGLatLng(lat: 35.14195107550685, lng: 128.13324875325566),
-        NMGLatLng(lat: 35.14216284738592, lng: 128.1331315214481),
-        NMGLatLng(lat: 35.142327394119924, lng: 128.133024314724),
-        NMGLatLng(lat: 35.142662255632125, lng: 128.13280141507127),
-        NMGLatLng(lat: 35.142826832072615, lng: 128.13268949788633),
-        NMGLatLng(lat: 35.14299910318604, lng: 128.1325534681909),
-        NMGLatLng(lat: 35.14312016202921, lng: 128.13241809673153),
-        NMGLatLng(lat: 35.143353015575414, lng: 128.1320957628339),
-        NMGLatLng(lat: 35.144068815019075, lng: 128.1310990303189),
-        NMGLatLng(lat: 35.144142823976274, lng: 128.13098808400613),
-        NMGLatLng(lat: 35.14418134271254, lng: 128.13086794857406),
-        NMGLatLng(lat: 35.14419618287982, lng: 128.13073840132913),
-        NMGLatLng(lat: 35.14418743288842, lng: 128.1306235118238),
-        NMGLatLng(lat: 35.14409482689955, lng: 128.12967889133444),
-        NMGLatLng(lat: 35.14620580548382, lng: 128.1298587613764),
-        NMGLatLng(lat: 35.146306535160676, lng: 128.12986893031888),
-        NMGLatLng(lat: 35.14643621687163, lng: 128.12988202297709),
-        NMGLatLng(lat: 35.14668615075015, lng: 128.1299976095371),
-        NMGLatLng(lat: 35.14683317147913, lng: 128.13013014528727),
-        NMGLatLng(lat: 35.14819844659006, lng: 128.1317848264517),
-        NMGLatLng(lat: 35.14895412014807, lng: 128.1328893909034),
-        NMGLatLng(lat: 35.14913181857878, lng: 128.13326324089218),
-        NMGLatLng(lat: 35.14919724057754, lng: 128.13331434079825),
-        NMGLatLng(lat: 35.14931725486776, lng: 128.13328305768775),
-        NMGLatLng(lat: 35.149453188780925, lng: 128.13324762170677),
-        NMGLatLng(lat: 35.15086686681125, lng: 128.13268498948142),
-        NMGLatLng(lat: 35.15207061353412, lng: 128.1321792799428),
-        NMGLatLng(lat: 35.152991482163394, lng: 128.13146927099726),
-        NMGLatLng(lat: 35.15371167471448, lng: 128.13085533183732),
-        NMGLatLng(lat: 35.154117923510654, lng: 128.13056983702396),
-        NMGLatLng(lat: 35.15473856017736, lng: 128.13025717689993),
-        NMGLatLng(lat: 35.156006195985015, lng: 128.1299010587016),
-        NMGLatLng(lat: 35.158972986046315, lng: 128.1304828877814),
-        NMGLatLng(lat: 35.15902983271488, lng: 128.13050528266086),
-        NMGLatLng(lat: 35.159135404778674, lng: 128.13054688280113),
-        NMGLatLng(lat: 35.159243929095155, lng: 128.1306208588964),
-        NMGLatLng(lat: 35.15932968474948, lng: 128.13075142174083),
-        NMGLatLng(lat: 35.15969693956458, lng: 128.13141427016734),
-        NMGLatLng(lat: 35.1607453333368, lng: 128.13349738034108),
-        NMGLatLng(lat: 35.16399616917441, lng: 128.13728526397583),
-        NMGLatLng(lat: 35.1643990844889, lng: 128.1376488370582),
-        NMGLatLng(lat: 35.16584316476042, lng: 128.13781044458688),
-        NMGLatLng(lat: 35.16753384598643, lng: 128.13588597309658),
-        NMGLatLng(lat: 35.17023549962628, lng: 128.13513413051805),
-        NMGLatLng(lat: 35.17309836368328, lng: 128.13427721031093),
-        NMGLatLng(lat: 35.1741472207317, lng: 128.13212449841484),
-        NMGLatLng(lat: 35.174812673718876, lng: 128.13077680742666),
-        NMGLatLng(lat: 35.17820059950352, lng: 128.13183302411016),
-        NMGLatLng(lat: 35.17918361562845, lng: 128.13169141008018),
-        NMGLatLng(lat: 35.18489079280343, lng: 128.13062378427247),
-        NMGLatLng(lat: 35.18600564404969, lng: 128.13071262866688),
-        NMGLatLng(lat: 35.18718532863798, lng: 128.13108796758854),
-        NMGLatLng(lat: 35.186321329803185, lng: 128.13391280916244),
-        NMGLatLng(lat: 35.18389205592854, lng: 128.1394938744165),
-        NMGLatLng(lat: 35.18388100735134, lng: 128.13951267330617),
-        NMGLatLng(lat: 35.1838240236305, lng: 128.13960966779933),
-        NMGLatLng(lat: 35.183515794308626, lng: 128.140217596325),
-        NMGLatLng(lat: 35.183389550235795, lng: 128.1404666097632),
-        NMGLatLng(lat: 35.18331091560345, lng: 128.14071368966137),
-        NMGLatLng(lat: 35.183257895935355, lng: 128.1409791635638),
-        NMGLatLng(lat: 35.18322613110333, lng: 128.14136560182303),
-        NMGLatLng(lat: 35.183244813855396, lng: 128.1422540745039),
-        NMGLatLng(lat: 35.18325403782638, lng: 128.14269270212597),
-        NMGLatLng(lat: 35.18327689262549, lng: 128.1430182934753),
-        NMGLatLng(lat: 35.18331975514351, lng: 128.14323049469837),
-        NMGLatLng(lat: 35.18336859669496, lng: 128.14339580290093),
-        NMGLatLng(lat: 35.183451634123635, lng: 128.1436768082393),
-        NMGLatLng(lat: 35.18354730006009, lng: 128.14396290336455),
-        NMGLatLng(lat: 35.18372649669425, lng: 128.14436376156044),
-        NMGLatLng(lat: 35.18400045420278, lng: 128.14497661916255),
-        NMGLatLng(lat: 35.18400908899271, lng: 128.1450162134165),
-        NMGLatLng(lat: 35.18402140296899, lng: 128.14507268594912),
-        NMGLatLng(lat: 35.184019423645005, lng: 128.14544200062105),
-        NMGLatLng(lat: 35.18399505341956, lng: 128.1455793845876),
-        NMGLatLng(lat: 35.183841908365984, lng: 128.1460230907904),
-        NMGLatLng(lat: 35.183592693544846, lng: 128.1465940662215),
-        NMGLatLng(lat: 35.183324940222924, lng: 128.14692192700937),
-        NMGLatLng(lat: 35.182627994150906, lng: 128.147033970817),
-        NMGLatLng(lat: 35.18259865632749, lng: 128.1467576473817),
-        NMGLatLng(lat: 35.18258337638946, lng: 128.14661372255148),
-        NMGLatLng(lat: 35.18249644164534, lng: 128.1457410140186),
-        NMGLatLng(lat: 35.182444421113594, lng: 128.14513776965984),
-        NMGLatLng(lat: 35.18234800353768, lng: 128.14418450883565),
-        NMGLatLng(lat: 35.182315067762865, lng: 128.14386035043643),
-        NMGLatLng(lat: 35.182259646302875, lng: 128.14332608059001),
-        NMGLatLng(lat: 35.182238253849846, lng: 128.1431255030623),
-        NMGLatLng(lat: 35.182175134968176, lng: 128.14253395395497),
-        NMGLatLng(lat: 35.17928318646488, lng: 128.14293566509542),
-        NMGLatLng(lat: 35.179831498101194, lng: 128.15029501357645),
-        NMGLatLng(lat: 35.17990699412937, lng: 128.1503550437145),
-        NMGLatLng(lat: 35.17994713768758, lng: 128.15041180507504),
-        NMGLatLng(lat: 35.17997468234967, lng: 128.15047081418808),
-        NMGLatLng(lat: 35.18017776985745, lng: 128.1511039939833),
-        NMGLatLng(lat: 35.1801957027576, lng: 128.15116824460833),
-        NMGLatLng(lat: 35.18047920344524, lng: 128.1524828733981),
-        NMGLatLng(lat: 35.18052053095697, lng: 128.15270661911592),
-        NMGLatLng(lat: 35.180671396057654, lng: 128.15447042881374),
-        NMGLatLng(lat: 35.18067612375441, lng: 128.15462858514508),
-        NMGLatLng(lat: 35.18067762169433, lng: 128.15484405385337),
-        NMGLatLng(lat: 35.18066986992621, lng: 128.15502429066876),
-        NMGLatLng(lat: 35.18065292214931, lng: 128.15518056747104),
-        NMGLatLng(lat: 35.18060778225531, lng: 128.15541256402568),
-        NMGLatLng(lat: 35.18057426658179, lng: 128.15553378387915),
-        NMGLatLng(lat: 35.180109922558415, lng: 128.15672234654357),
-        NMGLatLng(lat: 35.18005195567828, lng: 128.1568619256514),
-        NMGLatLng(lat: 35.180027687569215, lng: 128.15689198738383),
-        NMGLatLng(lat: 35.18001611322581, lng: 128.15690631437113),
-        NMGLatLng(lat: 35.17995692227844, lng: 128.15696182831414),
-        NMGLatLng(lat: 35.17982579850062, lng: 128.157068686579),
-        NMGLatLng(lat: 35.17807614583924, lng: 128.16083729219554),
-        NMGLatLng(lat: 35.17589474420887, lng: 128.16696066938155),
-        NMGLatLng(lat: 35.17589646887042, lng: 128.1670141032411),
-        NMGLatLng(lat: 35.17693934032221, lng: 128.1745225257027),
-        NMGLatLng(lat: 35.17698299029654, lng: 128.1746083822971),
-        NMGLatLng(lat: 35.177033450385466, lng: 128.17467374105647),
-        NMGLatLng(lat: 35.177124325511606, lng: 128.17476578337548),
-        NMGLatLng(lat: 35.17730876276322, lng: 128.17491618101008),
-        NMGLatLng(lat: 35.17743128256464, lng: 128.17498705813236),
-        NMGLatLng(lat: 35.17750513994147, lng: 128.17501936116474),
-        NMGLatLng(lat: 35.18034840838947, lng: 128.17595094901876),
-        NMGLatLng(lat: 35.18051598394616, lng: 128.17598974873465),
-        NMGLatLng(lat: 35.18072087124992, lng: 128.17603718461515),
-        NMGLatLng(lat: 35.180923762163324, lng: 128.17605182970948),
-        NMGLatLng(lat: 35.181063357850086, lng: 128.17603703330508),
-        NMGLatLng(lat: 35.18113753491539, lng: 128.17601410171687),
-        NMGLatLng(lat: 35.18117463880809, lng: 128.1760026299942),
-        NMGLatLng(lat: 35.18569081331169, lng: 128.18146006543387),
-        NMGLatLng(lat: 35.186893262613786, lng: 128.18575917691925),
-        NMGLatLng(lat: 35.18694628258066, lng: 128.18596419294857),
-        NMGLatLng(lat: 35.18707985112457, lng: 128.18625631661),
-        NMGLatLng(lat: 35.188263404328644, lng: 128.1881501436243),
-        NMGLatLng(lat: 35.18841285925946, lng: 128.18836877282334),
-        NMGLatLng(lat: 35.18870732321831, lng: 128.1887315583843),
-        NMGLatLng(lat: 35.188848337310176, lng: 128.18888169543254),
-        NMGLatLng(lat: 35.188955693843916, lng: 128.1889959856821),
-        NMGLatLng(lat: 35.18910675442512, lng: 128.18912755584591),
-        NMGLatLng(lat: 35.18920033996884, lng: 128.18918656445894),
-        NMGLatLng(lat: 35.1892321462716, lng: 128.18919655478575),
-        NMGLatLng(lat: 35.18928271493804, lng: 128.1892124217206),
-        NMGLatLng(lat: 35.18934137243258, lng: 128.18922374049373),
-        NMGLatLng(lat: 35.189397960088975, lng: 128.189234662863),
-        NMGLatLng(lat: 35.189581040598725, lng: 128.18927939408974),
-        NMGLatLng(lat: 35.18962415549703, lng: 128.1892942140434),
-        NMGLatLng(lat: 35.18971294102267, lng: 128.18932474550544),
-        NMGLatLng(lat: 35.18994937442634, lng: 128.18944919843585),
-        NMGLatLng(lat: 35.19089357463516, lng: 128.18996901206805),
-        NMGLatLng(lat: 35.19117420541593, lng: 128.1901397041299),
-        NMGLatLng(lat: 35.19136660801057, lng: 128.19030753555322),
-        NMGLatLng(lat: 35.19158192133963, lng: 128.19054892770703),
-        NMGLatLng(lat: 35.19176650642474, lng: 128.19081653167407),
-        NMGLatLng(lat: 35.1920906489255, lng: 128.19147031152278),
-        NMGLatLng(lat: 35.190861771898604, lng: 128.1955857301472),
-        NMGLatLng(lat: 35.19035860697221, lng: 128.19955984691114),
-        NMGLatLng(lat: 35.19002420448204, lng: 128.2000375967542),
-        NMGLatLng(lat: 35.18792689919642, lng: 128.2009438417343),
-        NMGLatLng(lat: 35.18631644837694, lng: 128.20086473216895),
-        NMGLatLng(lat: 35.18322850458747, lng: 128.201179673659),
-        NMGLatLng(lat: 35.18136445470505, lng: 128.20202026148738),
-        NMGLatLng(lat: 35.179574741381565, lng: 128.20232242627702),
-        NMGLatLng(lat: 35.177594940020725, lng: 128.20136139241643),
-        NMGLatLng(lat: 35.177207762106825, lng: 128.2017130879484),
-        NMGLatLng(lat: 35.176465416857184, lng: 128.20333327488717),
-        NMGLatLng(lat: 35.17559674680004, lng: 128.2054922740978),
-        NMGLatLng(lat: 35.17565305451445, lng: 128.20615586238964),
-        NMGLatLng(lat: 35.175229464962285, lng: 128.20887975577475),
-        NMGLatLng(lat: 35.17416596499367, lng: 128.2130329224082),
-        NMGLatLng(lat: 35.17314317455329, lng: 128.21547790281784),
-        NMGLatLng(lat: 35.171615127740836, lng: 128.21609344652703),
-        NMGLatLng(lat: 35.17069855524274, lng: 128.21490056072653),
-        NMGLatLng(lat: 35.169119198211824, lng: 128.2156114776444),
-        NMGLatLng(lat: 35.16812348950386, lng: 128.21646254151625),
-        NMGLatLng(lat: 35.16728572609033, lng: 128.2171786011664),
-        NMGLatLng(lat: 35.16656139899912, lng: 128.2171855656222),
-        NMGLatLng(lat: 35.166454828000056, lng: 128.21718656803142),
-        NMGLatLng(lat: 35.16257372584307, lng: 128.21532660977385),
-        NMGLatLng(lat: 35.16194790427183, lng: 128.2149215602717),
-        NMGLatLng(lat: 35.16121697316211, lng: 128.21432783659918),
-        NMGLatLng(lat: 35.15966296772559, lng: 128.2149435785313),
-        NMGLatLng(lat: 35.15883619616229, lng: 128.21558390566938),
-        NMGLatLng(lat: 35.15738296820203, lng: 128.21973987025345),
-        NMGLatLng(lat: 35.15751769799006, lng: 128.22049744526075),
-        NMGLatLng(lat: 35.15720976450658, lng: 128.22106952411772),
-        NMGLatLng(lat: 35.154361946173324, lng: 128.22239301265478),
-        NMGLatLng(lat: 35.152828573200495, lng: 128.22218631521656),
-        NMGLatLng(lat: 35.15130373511128, lng: 128.22330741512695),
-        NMGLatLng(lat: 35.1500167378614, lng: 128.2253581568337),
-        NMGLatLng(lat: 35.14712022890553, lng: 128.2277054041328),
-        NMGLatLng(lat: 35.146832462631906, lng: 128.22790361446386),
-        NMGLatLng(lat: 35.14442259020805, lng: 128.2276788129857),
-        NMGLatLng(lat: 35.14253380488461, lng: 128.2285958530481),
-        NMGLatLng(lat: 35.14171104434076, lng: 128.22972117297138),
-        NMGLatLng(lat: 35.138886165244735, lng: 128.2346791887144),
-        NMGLatLng(lat: 35.13793269749444, lng: 128.23730482122045),
-        NMGLatLng(lat: 35.137664594003375, lng: 128.23892313337473),
-        NMGLatLng(lat: 35.13760184261625, lng: 128.24020432311326),
-        NMGLatLng(lat: 35.13760108496786, lng: 128.24021985940578),
-        NMGLatLng(lat: 35.13759818296245, lng: 128.2402789596746),
-        NMGLatLng(lat: 35.13716711923191, lng: 128.24152086711425),
-        NMGLatLng(lat: 35.13602979533327, lng: 128.24451543907682),
-        NMGLatLng(lat: 35.13585974905592, lng: 128.24471245149923),
-        NMGLatLng(lat: 35.13471816089057, lng: 128.24496032640053),
-        NMGLatLng(lat: 35.13119376098292, lng: 128.24609921558852),
-        NMGLatLng(lat: 35.12846902798059, lng: 128.24737365150924)
-    ]
-
-
-    let coords2 = [NMGLatLng(lat: 37.5640984, lng: 126.9712268),
-                   NMGLatLng(lat: 37.5651279, lng: 126.9767904),
-                   NMGLatLng(lat: 37.5625365, lng: 126.9832241),
-                   NMGLatLng(lat: 37.5585305, lng: 126.9809297),
-                   NMGLatLng(lat: 37.5590777, lng: 126.974617),
-                   NMGLatLng(lat: 37.5640984, lng: 126.9712268)]
-    let holes = [NMGLatLng(lat: 37.5612243, lng: 126.9768938),
-                 NMGLatLng(lat: 37.5627692, lng: 126.9795502),
-                 NMGLatLng(lat: 37.5628377, lng: 126.976066),
-                 NMGLatLng(lat: 37.5612243, lng: 126.9768938)]
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        let polygon = NMGPolygon(ring: NMGLineString(points: munsaneup))
-        let polygonOverlay = NMFPolygonOverlay(polygon as! NMGPolygon<AnyObject>)
-        polygonOverlay?.fillColor = .red
-        polygonOverlay?.outlineColor = primaryColor
-        polygonOverlay?.outlineWidth = 4
-        polygonOverlay?.mapView = mapView
+        DispatchQueue.global(qos: .default).async {
+            // 백그라운드 스레드
+            let polygon = NMGPolygon(ring: NMGLineString(points: JinJuMapData().munsaneup))
+            let polygonOverlay = NMFPolygonOverlay(polygon as! NMGPolygon<AnyObject>)
+            polygonOverlay?.fillColor = .red
+            polygonOverlay?.outlineColor = primaryColor
+            polygonOverlay?.outlineWidth = 4
+            
+            DispatchQueue.main.async { [weak self] in
+                polygonOverlay?.mapView = self?.mapView
+            }
+        }
         
-        let polygon2 = NMGPolygon(ring: NMGLineString(points: coords2), interiorRings: [NMGLineString(points: holes)])
-        let polygonWithHole = NMFPolygonOverlay(polygon2 as! NMGPolygon<AnyObject>)
-        polygonWithHole?.fillColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 127.0/255.0)
-        polygonWithHole?.mapView = mapView
+        DispatchQueue.global(qos: .default).async {
+            // 백그라운드 스레드
+            let polygon = NMGPolygon(ring: NMGLineString(points: JinJuMapData().naedongmyeon))
+            let polygonOverlay = NMFPolygonOverlay(polygon as! NMGPolygon<AnyObject>)
+            polygonOverlay?.fillColor = .green
+            polygonOverlay?.outlineColor = primaryColor
+            polygonOverlay?.outlineWidth = 4
+            
+            DispatchQueue.main.async { [weak self] in
+                polygonOverlay?.mapView = self?.mapView
+            }
+        }
+        
+        DispatchQueue.global(qos: .default).async {
+            // 백그라운드 스레드
+            let polygon = NMGPolygon(ring: NMGLineString(points: JinJuMapData().manggyeongdong))
+            let polygonOverlay = NMFPolygonOverlay(polygon as! NMGPolygon<AnyObject>)
+            polygonOverlay?.fillColor = .blue
+            polygonOverlay?.outlineColor = primaryColor
+            polygonOverlay?.outlineWidth = 4
+            
+            DispatchQueue.main.async { [weak self] in
+                polygonOverlay?.mapView = self?.mapView
+            }
+        }
+        
+        DispatchQueue.global(qos: .default).async {
+            // 백그라운드 스레드
+            let polygon = NMGPolygon(ring: NMGLineString(points: JinJuMapData().gangnamdong))
+            let polygonOverlay = NMFPolygonOverlay(polygon as! NMGPolygon<AnyObject>)
+            polygonOverlay?.fillColor = .yellow
+            polygonOverlay?.outlineColor = primaryColor
+            polygonOverlay?.outlineWidth = 4
+            
+            DispatchQueue.main.async { [weak self] in
+                polygonOverlay?.mapView = self?.mapView
+            }
+        }
+        
+        DispatchQueue.global(qos: .default).async {
+            // 백그라운드 스레드
+            let polygon = NMGPolygon(ring: NMGLineString(points: JinJuMapData().kangnamdong))
+            let polygonOverlay = NMFPolygonOverlay(polygon as! NMGPolygon<AnyObject>)
+            polygonOverlay?.fillColor = .purple
+            polygonOverlay?.outlineColor = primaryColor
+            polygonOverlay?.outlineWidth = 4
+            
+            DispatchQueue.main.async { [weak self] in
+                polygonOverlay?.mapView = self?.mapView
+            }
+        }
+        
+        DispatchQueue.global(qos: .default).async {
+            // 백그라운드 스레드
+            var markers = [NMFMarker]()
+
+            for (latitude, longitude) in JinJuMapData().chilamdongMarkers {
+                let position = NMGLatLng(lat: latitude, lng: longitude)
+                let marker = NMFMarker(position: position)
+                marker.iconImage = NMFOverlayImage(name: "marker_star")  // 마커 아이콘 설정
+                markers.append(marker)
+            }
+
+            DispatchQueue.main.async { [weak self] in
+                // 메인 스레드
+                for marker in markers {
+                    marker.mapView = self?.mapView
+                }
+            }
+        }
+        
+        DispatchQueue.global(qos: .default).async {
+            // 백그라운드 스레드
+            var markers = [NMFMarker]()
+
+            for (latitude, longitude) in JinJuMapData().seongjidongMarkers {
+                let position = NMGLatLng(lat: latitude, lng: longitude)
+                let marker = NMFMarker(position: position)
+                marker.iconImage = NMFOverlayImage(name: "baseline_room_black_24pt")  // 마커 아이콘 설정
+                markers.append(marker)
+            }
+
+            DispatchQueue.main.async { [weak self] in
+                // 메인 스레드
+                for marker in markers {
+                    marker.mapView = self?.mapView
+                }
+            }
+        }
+
+        DispatchQueue.global(qos: .default).async {
+            // 백그라운드 스레드
+            var markers = [NMFMarker]()
+
+            for (latitude, longitude) in JinJuMapData().jungangdongMarkers {
+                let position = NMGLatLng(lat: latitude, lng: longitude)
+                let marker = NMFMarker(position: position)
+                marker.iconImage = NMFOverlayImage(name: "mSNormalBlue")  // 마커 아이콘 설정
+                markers.append(marker)
+            }
+
+            DispatchQueue.main.async { [weak self] in
+                // 메인 스레드
+                for marker in markers {
+                    marker.mapView = self?.mapView
+                }
+            }
+        }
     }
 
 }

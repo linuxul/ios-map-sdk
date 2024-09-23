@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2D0F51B52CA0EBF00071A4F2 /* Munsaneup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D0F51B42CA0EBF00071A4F2 /* Munsaneup.swift */; };
 		431076CF215A49F0008F170F /* ContentPaddingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431076CE215A49F0008F170F /* ContentPaddingViewController.swift */; };
 		431076D1215A50F1008F170F /* ControlSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431076D0215A50F1008F170F /* ControlSettingsViewController.swift */; };
 		431076D5215A6DE5008F170F /* GestureSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431076D4215A6DE5008F170F /* GestureSettingsViewController.swift */; };
@@ -104,6 +105,7 @@
 
 /* Begin PBXFileReference section */
 		279C04E06822FB890C606F9D /* Pods_NaverMapDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NaverMapDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2D0F51B42CA0EBF00071A4F2 /* Munsaneup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Munsaneup.swift; sourceTree = "<group>"; };
 		431076CE215A49F0008F170F /* ContentPaddingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentPaddingViewController.swift; sourceTree = "<group>"; };
 		431076D0215A50F1008F170F /* ControlSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlSettingsViewController.swift; sourceTree = "<group>"; };
 		431076D4215A6DE5008F170F /* GestureSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureSettingsViewController.swift; sourceTree = "<group>"; };
@@ -207,6 +209,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2D0F51B32CA0EAEF0071A4F2 /* JinJuData */ = {
+			isa = PBXGroup;
+			children = (
+				2D0F51B42CA0EBF00071A4F2 /* Munsaneup.swift */,
+			);
+			name = JinJuData;
+			sourceTree = "<group>";
+		};
 		431076D6215A7040008F170F /* Map Event */ = {
 			isa = PBXGroup;
 			children = (
@@ -234,6 +244,7 @@
 		43268D69213F9B1B00523697 /* Overlay */ = {
 			isa = PBXGroup;
 			children = (
+				2D0F51B32CA0EAEF0071A4F2 /* JinJuData */,
 				CE59BCBC23E963C800038596 /* Model */,
 				CE59BCB923E9636700038596 /* Views */,
 				43D95ACB213FA03000F19CE1 /* Overlay.storyboard */,
@@ -600,6 +611,7 @@
 				43C3C00B2272AABB004E0C5F /* CustomInfoWindowViewController.swift in Sources */,
 				CE12305C21F5C3E100A9B9FC /* GlobalZIndexViewController.swift in Sources */,
 				CEB2B84B26BA2CFE002ED948 /* MaxTiltViewController.swift in Sources */,
+				2D0F51B52CA0EBF00071A4F2 /* Munsaneup.swift in Sources */,
 				431076D1215A50F1008F170F /* ControlSettingsViewController.swift in Sources */,
 				43D95ACA213FA01F00F19CE1 /* MarkerViewController.swift in Sources */,
 				431AF94421467E300031DCDE /* LocationOverlayViewController.swift in Sources */,
