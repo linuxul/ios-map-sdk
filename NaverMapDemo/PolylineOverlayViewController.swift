@@ -107,10 +107,10 @@ class PolylineOverlayViewController: MapViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
             
-        let polygon2 = NMGPolygon(ring: NMGLineString(points: outerCoordinates), interiorRings: [NMGLineString(points: JinJuMapData().munsaneup), NMGLineString(points: JinJuMapData().naedongmyeon), NMGLineString(points: JinJuMapData().manggyeongdong), NMGLineString(points: JinJuMapData().kangnamdong)])
-        let polygonWithHole = NMFPolygonOverlay(polygon2 as! NMGPolygon<AnyObject>)
-        polygonWithHole?.fillColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 127.0/255.0)
-        polygonWithHole?.mapView = mapView
+//        let polygon2 = NMGPolygon(ring: NMGLineString(points: outerCoordinates), interiorRings: [NMGLineString(points: JinJuMapData().munsaneup), NMGLineString(points: JinJuMapData().naedongmyeon), NMGLineString(points: JinJuMapData().manggyeongdong), NMGLineString(points: JinJuMapData().kangnamdong)])
+//        let polygonWithHole = NMFPolygonOverlay(polygon2 as! NMGPolygon<AnyObject>)
+//        polygonWithHole?.fillColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 127.0/255.0)
+//        polygonWithHole?.mapView = mapView
     }
 
 
