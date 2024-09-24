@@ -104,11 +104,12 @@ class PolygonOverlayViewController: MapViewController {
         DispatchQueue.global(qos: .default).async {
             // 백그라운드 스레드
             var markers = [NMFMarker]()
+            let markersIcon = NMFOverlayImage(name: "marker_star")  // 마커 아이콘 설정
 
             for (latitude, longitude) in JinJuMapData().chilamdongMarkers {
                 let position = NMGLatLng(lat: latitude, lng: longitude)
                 let marker = NMFMarker(position: position)
-                marker.iconImage = NMFOverlayImage(name: "marker_star")  // 마커 아이콘 설정
+                marker.iconImage = markersIcon
                 markers.append(marker)
             }
 
@@ -123,11 +124,12 @@ class PolygonOverlayViewController: MapViewController {
         DispatchQueue.global(qos: .default).async {
             // 백그라운드 스레드
             var markers = [NMFMarker]()
+            let markersIcon = NMFOverlayImage(name: "baseline_room_black_24pt")  // 마커 아이콘 설정
 
             for (latitude, longitude) in JinJuMapData().seongjidongMarkers {
                 let position = NMGLatLng(lat: latitude, lng: longitude)
                 let marker = NMFMarker(position: position)
-                marker.iconImage = NMFOverlayImage(name: "baseline_room_black_24pt")  // 마커 아이콘 설정
+                marker.iconImage = markersIcon
                 markers.append(marker)
             }
 
@@ -142,11 +144,12 @@ class PolygonOverlayViewController: MapViewController {
         DispatchQueue.global(qos: .default).async {
             // 백그라운드 스레드
             var markers = [NMFMarker]()
+            let markersIcon = NMFOverlayImage(name: "mSNormalBlue")  // 마커 아이콘 설정
 
             for (latitude, longitude) in JinJuMapData().jungangdongMarkers {
                 let position = NMGLatLng(lat: latitude, lng: longitude)
                 let marker = NMFMarker(position: position)
-                marker.iconImage = NMFOverlayImage(name: "mSNormalBlue")  // 마커 아이콘 설정
+                marker.iconImage = markersIcon
                 markers.append(marker)
             }
 
