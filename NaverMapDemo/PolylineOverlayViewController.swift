@@ -104,26 +104,10 @@ class PolylineOverlayViewController: MapViewController {
         NMGLatLng(lat: 38.634705, lng: 124.216453) // 북한 서쪽 끝
     ]
     
-//    // 종로구를 대략적으로 포함하는 사각형 좌표 (시계방향)
-//    let jongnoCoordinates = [
-//        NMGLatLng(lat: 37.602642, lng: 126.968485), // 북서쪽
-//        NMGLatLng(lat: 37.602642, lng: 127.013875), // 북동쪽
-//        NMGLatLng(lat: 37.570225, lng: 127.013875), // 남동쪽
-//        NMGLatLng(lat: 37.570225, lng: 126.968485), // 남서쪽
-//        NMGLatLng(lat: 37.602642, lng: 126.968485)  // 다시 북서쪽으로 닫음
-//    ]
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        let polygon = NMGPolygon(ring: NMGLineString(points: outerCoordinates))
-//        let polygonOverlay = NMFPolygonOverlay(polygon as! NMGPolygon<AnyObject>)
-//        polygonOverlay?.fillColor = UIColor(red: 25.0/255.0, green: 192.0/255.0, blue: 46.0/255.0, alpha: 31.0/255.0)
-//        polygonOverlay?.outlineColor = primaryColor
-//        polygonOverlay?.outlineWidth = 3
-//        polygonOverlay?.mapView = mapView
-//        
-        let polygon2 = NMGPolygon(ring: NMGLineString(points: outerCoordinates), interiorRings: [NMGLineString(points: holes)])
+            
+        let polygon2 = NMGPolygon(ring: NMGLineString(points: outerCoordinates), interiorRings: [NMGLineString(points: JinJuMapData().munsaneup), NMGLineString(points: JinJuMapData().naedongmyeon), NMGLineString(points: JinJuMapData().manggyeongdong), NMGLineString(points: JinJuMapData().gangnamdong), NMGLineString(points: JinJuMapData().kangnamdong)])
         let polygonWithHole = NMFPolygonOverlay(polygon2 as! NMGPolygon<AnyObject>)
         polygonWithHole?.fillColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 127.0/255.0)
         polygonWithHole?.mapView = mapView
