@@ -115,6 +115,26 @@ class PolygonOverlayViewController: MapViewController {
                 polygonOverlay?.mapView = self?.mapView
             }
         }
+        
+        
+        DispatchQueue.global(qos: .default).async {
+            // 백그라운드 스레드
+            var polyongLatLng = [NMGLatLng]()
+            for (latitude, longitude) in JinJuMapData().chilamdongMarkers {
+                let nLatLng = NMGLatLng(lat: latitude, lng: longitude)
+                polyongLatLng.append(nLatLng)
+            }
+            
+            let polygon = NMGPolygon(ring: NMGLineString(points: polyongLatLng))
+            let polygonOverlay = NMFPolygonOverlay(polygon as! NMGPolygon<AnyObject>)
+            polygonOverlay?.fillColor = .clear
+            polygonOverlay?.outlineColor = .magenta
+            polygonOverlay?.outlineWidth = 4
+            
+            DispatchQueue.main.async { [weak self] in
+                polygonOverlay?.mapView = self?.mapView
+            }
+        }
     }
     
     func setupMarker() {
