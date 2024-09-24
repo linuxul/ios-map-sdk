@@ -24,39 +24,52 @@ class PolygonOverlayViewController: MapViewController {
     var centralMarker: NMFMarker?
     var polyline: NMFPolylineOverlay?
     
-    // 북한을 포함한 한반도의 대략적인 경계 좌표 (서쪽부터 시계방향으로)
-    let outerCoordinates = [
-        NMGLatLng(lat: 43.002989, lng: 123.002556), // 북한 북서쪽 끝 (중국과의 국경)
-        NMGLatLng(lat: 43.002989, lng: 131.872222), // 북한 북동쪽 끝 (러시아와의 국경)
-        NMGLatLng(lat: 33.190945, lng: 131.872222), // 남한 남동쪽 끝 (동해)
-        NMGLatLng(lat: 33.190945, lng: 123.002556), // 남한 남서쪽 끝 (서해)
-        NMGLatLng(lat: 43.002989, lng: 123.002556)  // 북한 북서쪽 끝
-    ]
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupMapConfig()
+        setupGolygonArea()
+        setupPolygon()
+        setupMarker()
+        setupNearestMarker()
+    }
+    
+    func setupMapConfig() {
+        
+        naverMapView.showLocationButton = true
+    }
+    
+    func setupNearestMarker() {
+        
         centralMarker = NMFMarker()
-//        centralMarker?.iconImage = NMFOverlayImage(name: "pointer") // 대여 아이콘 이미지 설정
         centralMarker?.position = mapView.cameraPosition.target      // 초기 중앙 좌표 설정
         centralMarker?.mapView = mapView
+
+        // 2. 카메라 이동 이벤트 리스너 설정
+        mapView.addCameraDelegate(delegate: self)
+    }
+    
+    func setupGolygonArea() {
         
         // 대한민국을 바탕으로 회색으로 처리를 하고 구역내에 사항은 안에 사항으로 처리
-        let polygon2 = NMGPolygon(ring: NMGLineString(points: outerCoordinates), interiorRings: [NMGLineString(points: JinJuMapData().munsaneup), NMGLineString(points: JinJuMapData().naedongmyeon), NMGLineString(points: JinJuMapData().manggyeongdong), NMGLineString(points: JinJuMapData().gangnamdong), NMGLineString(points: JinJuMapData().kangnamdong)])
+        let polygon2 = NMGPolygon(ring: NMGLineString(points: JinJuMapData().outerCoordinates),
+                                  interiorRings: [NMGLineString(points: JinJuMapData().munsaneup),
+                                                  NMGLineString(points: JinJuMapData().naedongmyeon),
+                                                  NMGLineString(points: JinJuMapData().manggyeongdong),
+                                                  NMGLineString(points: JinJuMapData().kangnamdong)])
         let polygonWithHole = NMFPolygonOverlay(polygon2 as! NMGPolygon<AnyObject>)
         polygonWithHole?.fillColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 127.0/255.0)
         polygonWithHole?.mapView = mapView
+    }
+    
+    func setupPolygon() {
         
-        // 2. 카메라 이동 이벤트 리스너 설정
-        mapView.addCameraDelegate(delegate: self)
-
         DispatchQueue.global(qos: .default).async {
             // 백그라운드 스레드
             let polygon = NMGPolygon(ring: NMGLineString(points: JinJuMapData().munsaneup))
             let polygonOverlay = NMFPolygonOverlay(polygon as! NMGPolygon<AnyObject>)
             polygonOverlay?.fillColor = .clear
-            polygonOverlay?.outlineColor = primaryColor
+            polygonOverlay?.outlineColor = .red
             polygonOverlay?.outlineWidth = 4
             
             DispatchQueue.main.async { [weak self] in
@@ -69,7 +82,7 @@ class PolygonOverlayViewController: MapViewController {
             let polygon = NMGPolygon(ring: NMGLineString(points: JinJuMapData().naedongmyeon))
             let polygonOverlay = NMFPolygonOverlay(polygon as! NMGPolygon<AnyObject>)
             polygonOverlay?.fillColor = .clear
-            polygonOverlay?.outlineColor = primaryColor
+            polygonOverlay?.outlineColor = .blue
             polygonOverlay?.outlineWidth = 4
             
             DispatchQueue.main.async { [weak self] in
@@ -82,20 +95,7 @@ class PolygonOverlayViewController: MapViewController {
             let polygon = NMGPolygon(ring: NMGLineString(points: JinJuMapData().manggyeongdong))
             let polygonOverlay = NMFPolygonOverlay(polygon as! NMGPolygon<AnyObject>)
             polygonOverlay?.fillColor = .clear
-            polygonOverlay?.outlineColor = primaryColor
-            polygonOverlay?.outlineWidth = 4
-            
-            DispatchQueue.main.async { [weak self] in
-                polygonOverlay?.mapView = self?.mapView
-            }
-        }
-        
-        DispatchQueue.global(qos: .default).async {
-            // 백그라운드 스레드
-            let polygon = NMGPolygon(ring: NMGLineString(points: JinJuMapData().gangnamdong))
-            let polygonOverlay = NMFPolygonOverlay(polygon as! NMGPolygon<AnyObject>)
-            polygonOverlay?.fillColor = .clear
-            polygonOverlay?.outlineColor = primaryColor
+            polygonOverlay?.outlineColor = .yellow
             polygonOverlay?.outlineWidth = 4
             
             DispatchQueue.main.async { [weak self] in
@@ -108,13 +108,16 @@ class PolygonOverlayViewController: MapViewController {
             let polygon = NMGPolygon(ring: NMGLineString(points: JinJuMapData().kangnamdong))
             let polygonOverlay = NMFPolygonOverlay(polygon as! NMGPolygon<AnyObject>)
             polygonOverlay?.fillColor = .clear
-            polygonOverlay?.outlineColor = primaryColor
+            polygonOverlay?.outlineColor = .brown
             polygonOverlay?.outlineWidth = 4
             
             DispatchQueue.main.async { [weak self] in
                 polygonOverlay?.mapView = self?.mapView
             }
         }
+    }
+    
+    func setupMarker() {
         
         DispatchQueue.global(qos: .default).async {
             // 백그라운드 스레드
@@ -177,7 +180,6 @@ class PolygonOverlayViewController: MapViewController {
         }
     }
     
-    
     // 두 좌표 사이의 유클리드 거리 계산 함수
     func calculateDistance(from: NMGLatLng, to: NMGLatLng) -> Double {
         let latDiff = from.lat - to.lat
@@ -214,6 +216,14 @@ class PolygonOverlayViewController: MapViewController {
         polyline?.width = 4.0 // 라인의 두께 설정
         polyline?.mapView = mapView // 지도에 라인 추가
     }
+    
+    @IBAction func goCityHole(_ sender: Any) {
+        
+        // 진주시청 위치 (위도, 경도)
+        let jinjuCityHallPosition = NMGLatLng(lat: 35.180223, lng: 128.107669)
+        mapView.moveCamera(NMFCameraUpdate(scrollTo: jinjuCityHallPosition))
+    }
+    
 
 }
 

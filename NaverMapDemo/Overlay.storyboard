@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="22505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22504"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -325,13 +325,35 @@
                                     <userDefinedRuntimeAttribute type="boolean" keyPath="showLocationButton" value="NO"/>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DOc-4c-lgy">
+                                <rect key="frame" x="10" y="101" width="44" height="44"/>
+                                <color key="backgroundColor" red="0.0" green="0.82745098039999998" blue="0.32549019610000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="44" id="9je-1d-37G"/>
+                                    <constraint firstAttribute="height" constant="44" id="eUx-vG-TDi"/>
+                                </constraints>
+                                <state key="normal" image="btnRefresh">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="22"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="boolean" keyPath="layer.maskToBounds" value="YES"/>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="goCityHole:" destination="oa9-Jw-MVe" eventType="touchUpInside" id="W3K-Jx-fRT"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Rdw-jx-nLi"/>
                         <color key="backgroundColor" red="0.0083867944780000002" green="0.78171372409999995" blue="0.23500731590000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="ESx-1N-Jui" firstAttribute="top" secondItem="Rdw-jx-nLi" secondAttribute="top" id="Job-oI-0Lo"/>
+                            <constraint firstItem="DOc-4c-lgy" firstAttribute="leading" secondItem="Rdw-jx-nLi" secondAttribute="leading" constant="10" id="Yjw-Wy-BqN"/>
                             <constraint firstItem="ESx-1N-Jui" firstAttribute="leading" secondItem="n6G-aw-UGt" secondAttribute="leading" id="Z2F-0B-87F"/>
                             <constraint firstItem="ESx-1N-Jui" firstAttribute="bottom" secondItem="n6G-aw-UGt" secondAttribute="bottom" id="hBs-oX-iDR"/>
+                            <constraint firstItem="DOc-4c-lgy" firstAttribute="top" secondItem="Rdw-jx-nLi" secondAttribute="top" constant="10" id="iEh-2a-sGX"/>
                             <constraint firstItem="ESx-1N-Jui" firstAttribute="trailing" secondItem="n6G-aw-UGt" secondAttribute="trailing" id="xbw-63-EyA"/>
                         </constraints>
                     </view>
