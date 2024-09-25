@@ -23,10 +23,20 @@ class PolygonOverlayViewController: MapViewController {
     // 1. 마커를 변수로 설정
     var centralMarker: NMFMarker?
     var polyline: NMFPolylineOverlay?
+
+    var munsaneupPolygonOverlays: NMFPolygonOverlay?
+    var munsaneupCoordinate = [CoordinateModel]()
+
+    var naedongmyeonPolygonOverlays: NMFPolygonOverlay?
+    var naedongmyeonCoordinate = [CoordinateModel]()
+
+    var manggyeongdongPolygonOverlays: NMFPolygonOverlay?
+    var manggyeongdongCoordinate = [CoordinateModel]()
     
-    
-    var blockedPolygonOverlays: NMFPolygonOverlay?
-    
+    var kangnamdongPolygonOverlays: NMFPolygonOverlay?
+    var kangnamdongCoordinate = [CoordinateModel]()
+
+    var chilamdongPolygonOverlays: NMFPolygonOverlay?
     var chilamdongCoordinate = [CoordinateModel]()
     var chilamdongMarkers = [NMFMarker]()
     
@@ -38,7 +48,24 @@ class PolygonOverlayViewController: MapViewController {
 
     let markersDefaultIcon = NMFOverlayImage(name: "marker_star")  // 마커 아이콘 설정
     
+    let defaultExtnt: NMGLatLngBounds = NMGLatLngBounds(southWestLat: 31.43,
+                                                               southWestLng: 122.37,
+                                                               northEastLat: 44.35,
+                                                               northEastLng: 132)
+    
+    /// 최소 줌레벨
+    let defaultMinZoomLevel: Double = 5
+    
+    /// 최대 줌레벨
+    var defaultMaxZoomLevel: Double = 21
+        
+    /// 기본 줌레벨
+    var defaultZoomLevel: Double = 17
+    
     deinit {
+        
+        chilamdongPolygonOverlays?.mapView = nil
+        
         for marker in chilamdongMarkers {
             marker.mapView = nil
         }
@@ -66,7 +93,7 @@ class PolygonOverlayViewController: MapViewController {
     func readJsonFile() {
 
         // 실제 사용 예시
-        let jungangdongJson = load(from: "jungangdong")  // 파일 이름에 맞게 변경 필요
+        let jungangdongJson = load(from: "jungangdong")
         if let coordinates = parseJSON(from: jungangdongJson) {
             jungangdongCoordinate = coordinates
             print("#1 디코딩 성공")
@@ -75,7 +102,7 @@ class PolygonOverlayViewController: MapViewController {
         }
         
         // 실제 사용 예시
-        let seongjidongJson = load(from: "seongjidong")  // 파일 이름에 맞게 변경 필요
+        let seongjidongJson = load(from: "seongjidong")
         if let coordinates = parseJSON(from: seongjidongJson) {
             seongjidongCoordinate = coordinates
             print("#2 디코딩 성공")
@@ -83,16 +110,52 @@ class PolygonOverlayViewController: MapViewController {
             print("#2 Failed to parse JSON")
         }
 
-        let chilamdongJson = load(from: "chilamdong")  // 파일 이름에 맞게 변경 필요
+        let chilamdongJson = load(from: "chilamdong")
         if let coordinates = parseJSON(from: chilamdongJson) {
             chilamdongCoordinate = coordinates
-            print("#2 디코딩 성공")
+            print("#3 디코딩 성공")
         } else {
-            print("#2 Failed to parse JSON")
+            print("#3 Failed to parse JSON")
+        }
+        
+        let kangnamdongJson = load(from: "kangnamdong")
+        if let coordinates = parseJSON(from: kangnamdongJson) {
+            kangnamdongCoordinate = coordinates
+            print("#4 디코딩 성공")
+        } else {
+            print("#4 Failed to parse JSON")
+        }
+        
+        let manggyeongdongJson = load(from: "manggyeongdong")
+        if let coordinates = parseJSON(from: manggyeongdongJson) {
+            manggyeongdongCoordinate = coordinates
+            print("#5 디코딩 성공")
+        } else {
+            print("#5 Failed to parse JSON")
+        }
+        
+        let naedongmyeonJson = load(from: "naedongmyeon")
+        if let coordinates = parseJSON(from: naedongmyeonJson) {
+            naedongmyeonCoordinate = coordinates
+            print("#6 디코딩 성공")
+        } else {
+            print("#6 Failed to parse JSON")
+        }
+        
+        let munsaneupJson = load(from: "munsaneup")
+        if let coordinates = parseJSON(from: munsaneupJson) {
+            munsaneupCoordinate = coordinates
+            print("#7 디코딩 성공")
+        } else {
+            print("#7 Failed to parse JSON")
         }
     }
     
     func setupMapConfig() {
+        
+        mapView.minZoomLevel = defaultMinZoomLevel
+        mapView.maxZoomLevel = defaultMaxZoomLevel
+        mapView.extent = defaultExtnt
         
         naverMapView.showLocationButton = true
         
@@ -111,43 +174,44 @@ class PolygonOverlayViewController: MapViewController {
     func setupGolygonArea() {
         
         // 대한민국을 바탕으로 회색으로 처리를 하고 구역내에 사항은 안에 사항으로 처리
-        DispatchQueue.global(qos: .default).async {
+        DispatchQueue.global(qos: .default).async { [weak self] in
+            guard let wSelf = self else { return }
             
-            var latlngOuterCoordinates = [NMGLatLng]()
+            var outerCoordinatesLatlng = [NMGLatLng]()
             for (latitude, longitude) in JinJuMapData.outerCoordinates {
                 let nLatLng = NMGLatLng(lat: latitude, lng: longitude)
-                latlngOuterCoordinates.append(nLatLng)
+                outerCoordinatesLatlng.append(nLatLng)
             }
             
-            var latlngMunsaneup = [NMGLatLng]()
-            for (latitude, longitude) in JinJuMapData.munsaneup {
-                let nLatLng = NMGLatLng(lat: latitude, lng: longitude)
-                latlngMunsaneup.append(nLatLng)
+            var munsaneupLatlng = [NMGLatLng]()
+            for coordinate in wSelf.munsaneupCoordinate {
+                let position = NMGLatLng(lat: coordinate.latitude, lng: coordinate.longitude)
+                munsaneupLatlng.append(position)
             }
             
-//            var latlngNaedongmyeon = [NMGLatLng]()
-//            for (latitude, longitude) in JinJuMapData.naedongmyeon {
-//                let nLatLng = NMGLatLng(lat: latitude, lng: longitude)
-//                latlngNaedongmyeon.append(nLatLng)
-//            }
-            
-            var latlngManggyeongdong = [NMGLatLng]()
-            for (latitude, longitude) in JinJuMapData.manggyeongdong {
-                let nLatLng = NMGLatLng(lat: latitude, lng: longitude)
-                latlngManggyeongdong.append(nLatLng)
+            var naedongmyeonLatlng = [NMGLatLng]()
+            for coordinate in wSelf.naedongmyeonCoordinate {
+                let position = NMGLatLng(lat: coordinate.latitude, lng: coordinate.longitude)
+                naedongmyeonLatlng.append(position)
             }
             
-            var latlngKangnamdong = [NMGLatLng]()
-            for (latitude, longitude) in JinJuMapData.kangnamdong {
-                let nLatLng = NMGLatLng(lat: latitude, lng: longitude)
-                latlngKangnamdong.append(nLatLng)
+            var manggyeongdongLatlng = [NMGLatLng]()
+            for coordinate in wSelf.manggyeongdongCoordinate {
+                let position = NMGLatLng(lat: coordinate.latitude, lng: coordinate.longitude)
+                manggyeongdongLatlng.append(position)
             }
             
-            let polygon2 = NMGPolygon(ring: NMGLineString(points: latlngOuterCoordinates),
-                                      interiorRings: [NMGLineString(points: latlngMunsaneup),
-//                                                      NMGLineString(points: latlngNaedongmyeon),
-                                                      NMGLineString(points: latlngManggyeongdong),
-                                                      NMGLineString(points: latlngKangnamdong)])
+            var kangnamdongLatlng = [NMGLatLng]()
+            for coordinate in wSelf.kangnamdongCoordinate {
+                let position = NMGLatLng(lat: coordinate.latitude, lng: coordinate.longitude)
+                kangnamdongLatlng.append(position)
+            }
+            
+            let polygon2 = NMGPolygon(ring: NMGLineString(points: outerCoordinatesLatlng),
+                                      interiorRings: [NMGLineString(points: munsaneupLatlng),
+                                                      NMGLineString(points: naedongmyeonLatlng),
+                                                      NMGLineString(points: manggyeongdongLatlng),
+                                                      NMGLineString(points: kangnamdongLatlng)])
             let polygonWithHole = NMFPolygonOverlay(polygon2 as! NMGPolygon<AnyObject>)
             polygonWithHole?.fillColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 127.0/255.0)
             
@@ -159,103 +223,25 @@ class PolygonOverlayViewController: MapViewController {
     
     func setupPolygon() {
         
-        DispatchQueue.global(qos: .default).async {
-
-            var polyongLatLng = [NMGLatLng]()
-            for (latitude, longitude) in JinJuMapData.munsaneup {
-                let nLatLng = NMGLatLng(lat: latitude, lng: longitude)
-                polyongLatLng.append(nLatLng)
-            }
-            
-            let polygon = NMGPolygon(ring: NMGLineString(points: polyongLatLng))
-            let polygonOverlay = NMFPolygonOverlay(polygon as! NMGPolygon<AnyObject>)
-            polygonOverlay?.fillColor = .clear
-            polygonOverlay?.outlineColor = .red
-            polygonOverlay?.outlineWidth = 4
-            
-            DispatchQueue.main.async { [weak self] in
-                polygonOverlay?.mapView = self?.mapView
-            }
+        if let polygonOverlay = addPolygonOverlay(coordinates: munsaneupCoordinate, mapView: mapView, fillColor: .clear, outlineColor: .red, outlineWidth: 4) {
+            munsaneupPolygonOverlays = polygonOverlay
         }
         
-//        DispatchQueue.global(qos: .default).async {
-//            
-//            var polyongLatLng = [NMGLatLng]()
-//            for (latitude, longitude) in JinJuMapData.naedongmyeon {
-//                let nLatLng = NMGLatLng(lat: latitude, lng: longitude)
-//                polyongLatLng.append(nLatLng)
-//            }
-//
-//            let polygon = NMGPolygon(ring: NMGLineString(points: polyongLatLng))
-//            let polygonOverlay = NMFPolygonOverlay(polygon as! NMGPolygon<AnyObject>)
-//            polygonOverlay?.fillColor = .clear
-//            polygonOverlay?.outlineColor = .blue
-//            polygonOverlay?.outlineWidth = 4
-//            
-//            DispatchQueue.main.async { [weak self] in
-//                polygonOverlay?.mapView = self?.mapView
-//            }
-//        }
-        
-        DispatchQueue.global(qos: .default).async {
-            // 백그라운드 스레드
-            var polyongLatLng = [NMGLatLng]()
-            for (latitude, longitude) in JinJuMapData.manggyeongdong {
-                let nLatLng = NMGLatLng(lat: latitude, lng: longitude)
-                polyongLatLng.append(nLatLng)
-            }
-            
-            let polygon = NMGPolygon(ring: NMGLineString(points: polyongLatLng))
-            let polygonOverlay = NMFPolygonOverlay(polygon as! NMGPolygon<AnyObject>)
-            polygonOverlay?.fillColor = .clear
-            polygonOverlay?.outlineColor = .yellow
-            polygonOverlay?.outlineWidth = 4
-            
-            DispatchQueue.main.async { [weak self] in
-                polygonOverlay?.mapView = self?.mapView
-            }
+        if let polygonOverlay = addPolygonOverlay(coordinates: naedongmyeonCoordinate, mapView: mapView, fillColor: .clear, outlineColor: .blue, outlineWidth: 4) {
+            naedongmyeonPolygonOverlays = polygonOverlay
         }
         
-        DispatchQueue.global(qos: .default).async {
-
-            // 백그라운드 스레드
-            var polyongLatLng = [NMGLatLng]()
-            for (latitude, longitude) in JinJuMapData.kangnamdong {
-                let nLatLng = NMGLatLng(lat: latitude, lng: longitude)
-                polyongLatLng.append(nLatLng)
-            }
-            
-            let polygon = NMGPolygon(ring: NMGLineString(points: polyongLatLng))
-            let polygonOverlay = NMFPolygonOverlay(polygon as! NMGPolygon<AnyObject>)
-            polygonOverlay?.fillColor = .clear
-            polygonOverlay?.outlineColor = .brown
-            polygonOverlay?.outlineWidth = 4
-            
-            DispatchQueue.main.async { [weak self] in
-                polygonOverlay?.mapView = self?.mapView
-            }
+        if let polygonOverlay = addPolygonOverlay(coordinates: manggyeongdongCoordinate, mapView: mapView, fillColor: .clear, outlineColor: .yellow, outlineWidth: 4) {
+            manggyeongdongPolygonOverlays = polygonOverlay
         }
         
+        if let polygonOverlay = addPolygonOverlay(coordinates: kangnamdongCoordinate, mapView: mapView, fillColor: .clear, outlineColor: .brown, outlineWidth: 4) {
+            kangnamdongPolygonOverlays = polygonOverlay
+        }
         
-//        DispatchQueue.global(qos: .default).async {
-//            // 백그라운드 스레드
-//            var polyongLatLng = [NMGLatLng]()
-//            for (latitude, longitude) in JinJuMapData.chilamdongMarkers {
-//                let nLatLng = NMGLatLng(lat: latitude, lng: longitude)
-//                polyongLatLng.append(nLatLng)
-//            }
-//            
-//            let polygon = NMGPolygon(ring: NMGLineString(points: polyongLatLng))
-//            let polygonOverlay = NMFPolygonOverlay(polygon as! NMGPolygon<AnyObject>)
-//            polygonOverlay?.fillColor = .clear
-//            polygonOverlay?.outlineColor = .magenta
-//            polygonOverlay?.outlineWidth = 4
-//            polygonOverlay?.mapView = mapView
-//            
-//            DispatchQueue.main.async { [weak self] in
-//                polygonOverlay?.mapView = self?.mapView
-//            }
-//        }
+        if let polygonOverlay = addPolygonOverlay(coordinates: chilamdongCoordinate, mapView: mapView, fillColor: .clear, outlineColor: .magenta, outlineWidth: 4) {
+            chilamdongPolygonOverlays = polygonOverlay
+        }
 
     }
     
@@ -311,7 +297,7 @@ class PolygonOverlayViewController: MapViewController {
         }
     }
     
-    func addPolygonOverlay(coordinates: [CoordinateModel], mapView: NMFMapView?, fillColor: UIColor = .clear, outlineColor: UIColor = .green, outlineWidth: UInt = 4) {
+    func addPolygonOverlay(coordinates: [CoordinateModel], mapView: NMFMapView?, fillColor: UIColor = .clear, outlineColor: UIColor = .green, outlineWidth: UInt = 4) -> NMFPolygonOverlay? {
         // 좌표 데이터를 NMGLatLng로 변환
         var polygonLatLng = [NMGLatLng]()
         for coordinate in coordinates {
@@ -326,14 +312,12 @@ class PolygonOverlayViewController: MapViewController {
         polygonOverlay?.outlineColor = outlineColor
         polygonOverlay?.outlineWidth = outlineWidth
 
+        // 다각형 오버레이를 지도에 추가
         polygonOverlay?.mapView = mapView
+        
+        return polygonOverlay
     }
 
-//    // 사용 예시
-//    addPolygonOverlay(coordinates: JinJuMapData.chilamdongMarkers, mapView: mapView)
-//
-
-    
     
     // 두 좌표 사이의 유클리드 거리 계산 함수
     func calculateDistance(from: NMGLatLng, to: NMGLatLng) -> Double {
@@ -343,11 +327,16 @@ class PolygonOverlayViewController: MapViewController {
     }
 
     // 중앙 좌표에서 가장 가까운 마커 찾기
-    func findNearestMarker(from center: NMGLatLng, markers: [CoordinateModel]) -> NMGLatLng {
-        var nearestMarker: NMGLatLng = NMGLatLng(lat: markers[0].latitude, lng: markers[0].longitude)
+    func findNearestMarker(from center: NMGLatLng, coordinates: [CoordinateModel]) -> NMGLatLng? {
+
+        if coordinates.isEmpty {
+            return nil
+        }
+        
+        var nearestMarker: NMGLatLng = NMGLatLng(lat: coordinates[0].latitude, lng: coordinates[0].longitude)
         var minDistance = calculateDistance(from: center, to: nearestMarker)
 
-        for coordinate in markers {
+        for coordinate in coordinates {
             let markerLatLng = NMGLatLng(lat: coordinate.latitude, lng: coordinate.longitude)
             let distance = calculateDistance(from: center, to: markerLatLng)
             
@@ -417,9 +406,10 @@ extension PolygonOverlayViewController: NMFMapViewCameraDelegate {
         centralMarker?.position = centerLatLng
         
         // 가장 가까운 마커 찾기
-        let nearestMarkerPosition = findNearestMarker(from: centerLatLng, markers: chilamdongCoordinate)
+        guard let nearestMarkerPosition = findNearestMarker(from: centerLatLng, coordinates: chilamdongCoordinate) else {
+            return
+        }
         
-        // 경로 그리기
         drawLine(from: centerLatLng, to: nearestMarkerPosition)
     }
 }

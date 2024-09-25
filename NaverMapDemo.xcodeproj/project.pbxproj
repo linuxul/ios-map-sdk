@@ -15,6 +15,10 @@
 		2D704C132CA3F0F500DE8D16 /* CoordinateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D704C122CA3F0F500DE8D16 /* CoordinateModel.swift */; };
 		2D704C152CA4014B00DE8D16 /* seongjidong.json in Resources */ = {isa = PBXBuildFile; fileRef = 2D704C142CA4014B00DE8D16 /* seongjidong.json */; };
 		2D704C172CA4048500DE8D16 /* chilamdong.json in Resources */ = {isa = PBXBuildFile; fileRef = 2D704C162CA4048500DE8D16 /* chilamdong.json */; };
+		2D704C192CA429ED00DE8D16 /* kangnamdong.json in Resources */ = {isa = PBXBuildFile; fileRef = 2D704C182CA429ED00DE8D16 /* kangnamdong.json */; };
+		2D704C1B2CA42C2700DE8D16 /* manggyeongdong.json in Resources */ = {isa = PBXBuildFile; fileRef = 2D704C1A2CA42C2700DE8D16 /* manggyeongdong.json */; };
+		2D704C1D2CA4302800DE8D16 /* naedongmyeon.json in Resources */ = {isa = PBXBuildFile; fileRef = 2D704C1C2CA4302800DE8D16 /* naedongmyeon.json */; };
+		2D704C1F2CA4324600DE8D16 /* munsaneup.json in Resources */ = {isa = PBXBuildFile; fileRef = 2D704C1E2CA4324600DE8D16 /* munsaneup.json */; };
 		431076CF215A49F0008F170F /* ContentPaddingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431076CE215A49F0008F170F /* ContentPaddingViewController.swift */; };
 		431076D1215A50F1008F170F /* ControlSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431076D0215A50F1008F170F /* ControlSettingsViewController.swift */; };
 		431076D5215A6DE5008F170F /* GestureSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431076D4215A6DE5008F170F /* GestureSettingsViewController.swift */; };
@@ -120,6 +124,10 @@
 		2D704C122CA3F0F500DE8D16 /* CoordinateModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoordinateModel.swift; sourceTree = "<group>"; };
 		2D704C142CA4014B00DE8D16 /* seongjidong.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = seongjidong.json; sourceTree = "<group>"; };
 		2D704C162CA4048500DE8D16 /* chilamdong.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = chilamdong.json; sourceTree = "<group>"; };
+		2D704C182CA429ED00DE8D16 /* kangnamdong.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = kangnamdong.json; sourceTree = "<group>"; };
+		2D704C1A2CA42C2700DE8D16 /* manggyeongdong.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = manggyeongdong.json; sourceTree = "<group>"; };
+		2D704C1C2CA4302800DE8D16 /* naedongmyeon.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = naedongmyeon.json; sourceTree = "<group>"; };
+		2D704C1E2CA4324600DE8D16 /* munsaneup.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = munsaneup.json; sourceTree = "<group>"; };
 		431076CE215A49F0008F170F /* ContentPaddingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentPaddingViewController.swift; sourceTree = "<group>"; };
 		431076D0215A50F1008F170F /* ControlSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlSettingsViewController.swift; sourceTree = "<group>"; };
 		431076D4215A6DE5008F170F /* GestureSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureSettingsViewController.swift; sourceTree = "<group>"; };
@@ -239,6 +247,10 @@
 			children = (
 				2D704C162CA4048500DE8D16 /* chilamdong.json */,
 				2D704C0F2CA3DCB700DE8D16 /* jungangdong.json */,
+				2D704C182CA429ED00DE8D16 /* kangnamdong.json */,
+				2D704C1A2CA42C2700DE8D16 /* manggyeongdong.json */,
+				2D704C1E2CA4324600DE8D16 /* munsaneup.json */,
+				2D704C1C2CA4302800DE8D16 /* naedongmyeon.json */,
 				2D704C142CA4014B00DE8D16 /* seongjidong.json */,
 			);
 			path = Resource;
@@ -555,11 +567,14 @@
 				438AA5F5213D416B004D1053 /* LaunchScreen.storyboard in Resources */,
 				43DFD1422148E8A3008C77C5 /* Camera.storyboard in Resources */,
 				43F5EEE02161E3F600244E08 /* Misc.storyboard in Resources */,
+				2D704C1B2CA42C2700DE8D16 /* manggyeongdong.json in Resources */,
+				2D704C1D2CA4302800DE8D16 /* naedongmyeon.json in Resources */,
 				CE5BB40123BB16F000FF24A3 /* ValueView.xib in Resources */,
 				2D704C152CA4014B00DE8D16 /* seongjidong.json in Resources */,
 				4390A88721551DDE0008CDC8 /* MapOptions.storyboard in Resources */,
 				438AA615213D4DAB004D1053 /* Basic.storyboard in Resources */,
 				43EE85A5218FE2C800C99297 /* LICENSE in Resources */,
+				2D704C1F2CA4324600DE8D16 /* munsaneup.json in Resources */,
 				43DB1E70214A0A0800A54EE2 /* Map.storyboard in Resources */,
 				CE8491F82BA2B75700703A23 /* seoul_toilet.csv in Resources */,
 				43C3C00D2272B54B004E0C5F /* CustomInfoWindowView.xib in Resources */,
@@ -568,6 +583,7 @@
 				CED898B52BA1C01E00A35541 /* Clustering.storyboard in Resources */,
 				438AA5F0213D416A004D1053 /* Main.storyboard in Resources */,
 				431076DA215A74C3008F170F /* MapEvent.storyboard in Resources */,
+				2D704C192CA429ED00DE8D16 /* kangnamdong.json in Resources */,
 				43D95ACC213FA03000F19CE1 /* Overlay.storyboard in Resources */,
 				2D704C172CA4048500DE8D16 /* chilamdong.json in Resources */,
 			);
