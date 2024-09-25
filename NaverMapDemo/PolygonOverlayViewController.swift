@@ -54,18 +54,41 @@ class PolygonOverlayViewController: MapViewController {
         // 대한민국을 바탕으로 회색으로 처리를 하고 구역내에 사항은 안에 사항으로 처리
         DispatchQueue.global(qos: .default).async {
             
-            // 백그라운드 스레드
-            var latLngMunsaneup = [NMGLatLng]()
-            for (latitude, longitude) in JinJuMapData.munsaneup {
+            var latlngOuterCoordinates = [NMGLatLng]()
+            for (latitude, longitude) in JinJuMapData.outerCoordinates {
                 let nLatLng = NMGLatLng(lat: latitude, lng: longitude)
-                latLngMunsaneup.append(nLatLng)
+                latlngOuterCoordinates.append(nLatLng)
             }
             
-            let polygon2 = NMGPolygon(ring: NMGLineString(points: JinJuMapData.outerCoordinates),
-                                      interiorRings: [NMGLineString(points: latLngMunsaneup),
-                                                      NMGLineString(points: JinJuMapData.naedongmyeon),
-                                                      NMGLineString(points: JinJuMapData.manggyeongdong),
-                                                      NMGLineString(points: JinJuMapData.kangnamdong)])
+            var latlngMunsaneup = [NMGLatLng]()
+            for (latitude, longitude) in JinJuMapData.munsaneup {
+                let nLatLng = NMGLatLng(lat: latitude, lng: longitude)
+                latlngMunsaneup.append(nLatLng)
+            }
+            
+            var latlngNaedongmyeon = [NMGLatLng]()
+            for (latitude, longitude) in JinJuMapData.naedongmyeon {
+                let nLatLng = NMGLatLng(lat: latitude, lng: longitude)
+                latlngNaedongmyeon.append(nLatLng)
+            }
+            
+            var latlngManggyeongdong = [NMGLatLng]()
+            for (latitude, longitude) in JinJuMapData.manggyeongdong {
+                let nLatLng = NMGLatLng(lat: latitude, lng: longitude)
+                latlngManggyeongdong.append(nLatLng)
+            }
+            
+            var latlngKangnamdong = [NMGLatLng]()
+            for (latitude, longitude) in JinJuMapData.kangnamdong {
+                let nLatLng = NMGLatLng(lat: latitude, lng: longitude)
+                latlngKangnamdong.append(nLatLng)
+            }
+            
+            let polygon2 = NMGPolygon(ring: NMGLineString(points: latlngOuterCoordinates),
+                                      interiorRings: [NMGLineString(points: latlngMunsaneup),
+                                                      NMGLineString(points: latlngNaedongmyeon),
+                                                      NMGLineString(points: latlngManggyeongdong),
+                                                      NMGLineString(points: latlngKangnamdong)])
             let polygonWithHole = NMFPolygonOverlay(polygon2 as! NMGPolygon<AnyObject>)
             polygonWithHole?.fillColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 127.0/255.0)
             
@@ -78,15 +101,13 @@ class PolygonOverlayViewController: MapViewController {
     func setupPolygon() {
         
         DispatchQueue.global(qos: .default).async {
-            
-            // 백그라운드 스레드
+
             var polyongLatLng = [NMGLatLng]()
             for (latitude, longitude) in JinJuMapData.munsaneup {
                 let nLatLng = NMGLatLng(lat: latitude, lng: longitude)
                 polyongLatLng.append(nLatLng)
             }
             
-            // 백그라운드 스레드
             let polygon = NMGPolygon(ring: NMGLineString(points: polyongLatLng))
             let polygonOverlay = NMFPolygonOverlay(polygon as! NMGPolygon<AnyObject>)
             polygonOverlay?.fillColor = .clear
@@ -99,8 +120,14 @@ class PolygonOverlayViewController: MapViewController {
         }
         
         DispatchQueue.global(qos: .default).async {
-            // 백그라운드 스레드
-            let polygon = NMGPolygon(ring: NMGLineString(points: JinJuMapData.naedongmyeon))
+            
+            var polyongLatLng = [NMGLatLng]()
+            for (latitude, longitude) in JinJuMapData.naedongmyeon {
+                let nLatLng = NMGLatLng(lat: latitude, lng: longitude)
+                polyongLatLng.append(nLatLng)
+            }
+
+            let polygon = NMGPolygon(ring: NMGLineString(points: polyongLatLng))
             let polygonOverlay = NMFPolygonOverlay(polygon as! NMGPolygon<AnyObject>)
             polygonOverlay?.fillColor = .clear
             polygonOverlay?.outlineColor = .blue
@@ -113,7 +140,13 @@ class PolygonOverlayViewController: MapViewController {
         
         DispatchQueue.global(qos: .default).async {
             // 백그라운드 스레드
-            let polygon = NMGPolygon(ring: NMGLineString(points: JinJuMapData.manggyeongdong))
+            var polyongLatLng = [NMGLatLng]()
+            for (latitude, longitude) in JinJuMapData.manggyeongdong {
+                let nLatLng = NMGLatLng(lat: latitude, lng: longitude)
+                polyongLatLng.append(nLatLng)
+            }
+            
+            let polygon = NMGPolygon(ring: NMGLineString(points: polyongLatLng))
             let polygonOverlay = NMFPolygonOverlay(polygon as! NMGPolygon<AnyObject>)
             polygonOverlay?.fillColor = .clear
             polygonOverlay?.outlineColor = .yellow
