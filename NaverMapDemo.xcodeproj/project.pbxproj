@@ -13,6 +13,7 @@
 		2D704C062CA3D58900DE8D16 /* NaedongMapData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D704C052CA3D58900DE8D16 /* NaedongMapData.swift */; };
 		2D704C102CA3DCB700DE8D16 /* jungangdong.json in Resources */ = {isa = PBXBuildFile; fileRef = 2D704C0F2CA3DCB700DE8D16 /* jungangdong.json */; };
 		2D704C132CA3F0F500DE8D16 /* MapCoordinateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D704C122CA3F0F500DE8D16 /* MapCoordinateModel.swift */; };
+		2D704C152CA4014B00DE8D16 /* seongjidong.json in Resources */ = {isa = PBXBuildFile; fileRef = 2D704C142CA4014B00DE8D16 /* seongjidong.json */; };
 		431076CF215A49F0008F170F /* ContentPaddingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431076CE215A49F0008F170F /* ContentPaddingViewController.swift */; };
 		431076D1215A50F1008F170F /* ControlSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431076D0215A50F1008F170F /* ControlSettingsViewController.swift */; };
 		431076D5215A6DE5008F170F /* GestureSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431076D4215A6DE5008F170F /* GestureSettingsViewController.swift */; };
@@ -116,6 +117,7 @@
 		2D704C052CA3D58900DE8D16 /* NaedongMapData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaedongMapData.swift; sourceTree = "<group>"; };
 		2D704C0F2CA3DCB700DE8D16 /* jungangdong.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = jungangdong.json; sourceTree = "<group>"; };
 		2D704C122CA3F0F500DE8D16 /* MapCoordinateModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapCoordinateModel.swift; sourceTree = "<group>"; };
+		2D704C142CA4014B00DE8D16 /* seongjidong.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = seongjidong.json; sourceTree = "<group>"; };
 		431076CE215A49F0008F170F /* ContentPaddingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentPaddingViewController.swift; sourceTree = "<group>"; };
 		431076D0215A50F1008F170F /* ControlSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlSettingsViewController.swift; sourceTree = "<group>"; };
 		431076D4215A6DE5008F170F /* GestureSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureSettingsViewController.swift; sourceTree = "<group>"; };
@@ -234,6 +236,7 @@
 			isa = PBXGroup;
 			children = (
 				2D704C0F2CA3DCB700DE8D16 /* jungangdong.json */,
+				2D704C142CA4014B00DE8D16 /* seongjidong.json */,
 			);
 			path = Resource;
 			sourceTree = "<group>";
@@ -550,6 +553,7 @@
 				43DFD1422148E8A3008C77C5 /* Camera.storyboard in Resources */,
 				43F5EEE02161E3F600244E08 /* Misc.storyboard in Resources */,
 				CE5BB40123BB16F000FF24A3 /* ValueView.xib in Resources */,
+				2D704C152CA4014B00DE8D16 /* seongjidong.json in Resources */,
 				4390A88721551DDE0008CDC8 /* MapOptions.storyboard in Resources */,
 				438AA615213D4DAB004D1053 /* Basic.storyboard in Resources */,
 				43EE85A5218FE2C800C99297 /* LICENSE in Resources */,

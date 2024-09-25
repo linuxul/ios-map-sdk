@@ -24,9 +24,13 @@ class PolygonOverlayViewController: MapViewController {
     var centralMarker: NMFMarker?
     var polyline: NMFPolylineOverlay?
     
+    var seongidongCoordinate = [MapCoordinateModel]()
+    var seongidongMarkers = [NMFMarker]()
+    
     var jungangdongCoordinate = [MapCoordinateModel]()
     var jungangdongMarkers = [NMFMarker]()
-    let markersDefaultIcon = NMFOverlayImage(name: "baseline_room_black_24pt")  // 마커 아이콘 설정
+
+    let markersDefaultIcon = NMFOverlayImage(name: "marker_star")  // 마커 아이콘 설정
     
     deinit {
         // 메모리 삭제
@@ -49,12 +53,21 @@ class PolygonOverlayViewController: MapViewController {
     func readJsonFile() {
 
         // 실제 사용 예시
-        let jsonString = load(from: "jungangdong")  // 파일 이름에 맞게 변경 필요
-        if let coordinates = parseJSON(from: jsonString) {
+        let jungangdongJson = load(from: "jungangdong")  // 파일 이름에 맞게 변경 필요
+        if let coordinates = parseJSON(from: jungangdongJson) {
             jungangdongCoordinate = coordinates
-            print(coordinates)  // 디코딩된 좌표 리스트 출력
+            print("#1 디코딩 성공")
         } else {
-            print("Failed to parse JSON")
+            print("#1 Failed to parse JSON")
+        }
+        
+        // 실제 사용 예시
+        let seongidongJson = load(from: "seongjidong")  // 파일 이름에 맞게 변경 필요
+        if let coordinates = parseJSON(from: seongidongJson) {
+            seongidongCoordinate = coordinates
+            print("#1 디코딩 성공")
+        } else {
+            print("#1 Failed to parse JSON")
         }
     }
     
@@ -244,31 +257,19 @@ class PolygonOverlayViewController: MapViewController {
                 }
             }
         }
-        
-//        DispatchQueue.global(qos: .default).async {
-//            // 백그라운드 스레드
-//            var markers = [NMFMarker]()
-//
-//            for (latitude, longitude) in JinJuMapData.seongjidongMarkers {
-//                let position = NMGLatLng(lat: latitude, lng: longitude)
-//                let marker = NMFMarker(position: position)
-//                marker.iconImage = markersDefaultIcon
-//                markers.append(marker)
-//            }
-//
-//            DispatchQueue.main.async { [weak self] in
-//                // 메인 스레드
-//                for marker in markers {
-//                    marker.mapView = self?.mapView
-//                }
-//            }
-//        }
+
+        seongidongMarkers = []  // MARK: 메모리 해제 필요
+        createMarkers(for: seongidongCoordinate, mapView: mapView) { [weak self] newMarkers in
+            guard let wSelf = self else { return }
+            wSelf.seongidongMarkers = newMarkers
+        }
+
 
         // 마커 생성 및 업데이트
-        jungangdongMarkers = []
+        jungangdongMarkers = [] // MARK: 메모리 해제 필요
         createMarkers(for: jungangdongCoordinate, mapView: mapView) { [weak self] newMarkers in
             guard let wSelf = self else { return }
-            wSelf.jungangdongMarkers.append(contentsOf: newMarkers)
+            wSelf.jungangdongMarkers = newMarkers
         }
     }
     
