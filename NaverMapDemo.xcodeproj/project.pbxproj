@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		2D0F51B52CA0EBF00071A4F2 /* Munsaneup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D0F51B42CA0EBF00071A4F2 /* Munsaneup.swift */; };
+		2D704C022CA3D49600DE8D16 /* OuterMapData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D704C012CA3D49600DE8D16 /* OuterMapData.swift */; };
+		2D704C042CA3D51A00DE8D16 /* MunSanMapData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D704C032CA3D51A00DE8D16 /* MunSanMapData.swift */; };
+		2D704C062CA3D58900DE8D16 /* NaedongMapData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D704C052CA3D58900DE8D16 /* NaedongMapData.swift */; };
 		431076CF215A49F0008F170F /* ContentPaddingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431076CE215A49F0008F170F /* ContentPaddingViewController.swift */; };
 		431076D1215A50F1008F170F /* ControlSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431076D0215A50F1008F170F /* ControlSettingsViewController.swift */; };
 		431076D5215A6DE5008F170F /* GestureSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431076D4215A6DE5008F170F /* GestureSettingsViewController.swift */; };
@@ -106,6 +109,9 @@
 /* Begin PBXFileReference section */
 		279C04E06822FB890C606F9D /* Pods_NaverMapDemo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_NaverMapDemo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D0F51B42CA0EBF00071A4F2 /* Munsaneup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Munsaneup.swift; sourceTree = "<group>"; };
+		2D704C012CA3D49600DE8D16 /* OuterMapData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OuterMapData.swift; sourceTree = "<group>"; };
+		2D704C032CA3D51A00DE8D16 /* MunSanMapData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MunSanMapData.swift; sourceTree = "<group>"; };
+		2D704C052CA3D58900DE8D16 /* NaedongMapData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaedongMapData.swift; sourceTree = "<group>"; };
 		431076CE215A49F0008F170F /* ContentPaddingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentPaddingViewController.swift; sourceTree = "<group>"; };
 		431076D0215A50F1008F170F /* ControlSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlSettingsViewController.swift; sourceTree = "<group>"; };
 		431076D4215A6DE5008F170F /* GestureSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureSettingsViewController.swift; sourceTree = "<group>"; };
@@ -213,6 +219,9 @@
 			isa = PBXGroup;
 			children = (
 				2D0F51B42CA0EBF00071A4F2 /* Munsaneup.swift */,
+				2D704C012CA3D49600DE8D16 /* OuterMapData.swift */,
+				2D704C032CA3D51A00DE8D16 /* MunSanMapData.swift */,
+				2D704C052CA3D58900DE8D16 /* NaedongMapData.swift */,
 			);
 			name = JinJuData;
 			sourceTree = "<group>";
@@ -590,6 +599,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4390A88921551EED0008CDC8 /* ExtentViewController.swift in Sources */,
+				2D704C022CA3D49600DE8D16 /* OuterMapData.swift in Sources */,
 				43C516882154D31200D36718 /* IndoorMapViewController.swift in Sources */,
 				43C5168A2154D55D00D36718 /* NightModeViewController.swift in Sources */,
 				CE5BB40523BB264900FF24A3 /* NibLoadable.swift in Sources */,
@@ -615,11 +625,13 @@
 				431076D1215A50F1008F170F /* ControlSettingsViewController.swift in Sources */,
 				43D95ACA213FA01F00F19CE1 /* MarkerViewController.swift in Sources */,
 				431AF94421467E300031DCDE /* LocationOverlayViewController.swift in Sources */,
+				2D704C062CA3D58900DE8D16 /* NaedongMapData.swift in Sources */,
 				43F5EED42161AE7E00244E08 /* PickAllViewController.swift in Sources */,
 				431076DE215A8231008F170F /* SymbolClickEventViewController.swift in Sources */,
 				431076CF215A49F0008F170F /* ContentPaddingViewController.swift in Sources */,
 				43E2CA2F216B7305003E08BD /* ArrowheadPathOverlayViewController.swift in Sources */,
 				43DEFE8B2148B53A00B1505E /* MultipartPathOverlayViewController.swift in Sources */,
+				2D704C042CA3D51A00DE8D16 /* MunSanMapData.swift in Sources */,
 				CED898B92BA1C36F00A35541 /* ComplexClusteringViewController.swift in Sources */,
 				43DB1E72214A0AF500A54EE2 /* MapTypesAndLayerGroupsViewController.swift in Sources */,
 				43DFD14E214907D9008C77C5 /* FitBoundsViewController.swift in Sources */,
