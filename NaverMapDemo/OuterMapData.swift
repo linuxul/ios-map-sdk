@@ -7,6 +7,8 @@
 //
 
 import Foundation
+
+import Foundation
 import NMapsMap
 
 struct JinJuMapData {

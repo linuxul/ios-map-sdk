@@ -24,16 +24,29 @@ class PolygonOverlayViewController: MapViewController {
     var centralMarker: NMFMarker?
     var polyline: NMFPolylineOverlay?
     
-    var seongidongCoordinate = [MapCoordinateModel]()
-    var seongidongMarkers = [NMFMarker]()
     
-    var jungangdongCoordinate = [MapCoordinateModel]()
+    var blockedPolygonOverlays: NMFPolygonOverlay?
+    
+    var chilamdongCoordinate = [CoordinateModel]()
+    var chilamdongMarkers = [NMFMarker]()
+    
+    var seongjidongCoordinate = [CoordinateModel]()
+    var seongjidongMarkers = [NMFMarker]()
+    
+    var jungangdongCoordinate = [CoordinateModel]()
     var jungangdongMarkers = [NMFMarker]()
 
     let markersDefaultIcon = NMFOverlayImage(name: "marker_star")  // 마커 아이콘 설정
     
     deinit {
-        // 메모리 삭제
+        for marker in chilamdongMarkers {
+            marker.mapView = nil
+        }
+        
+        for marker in seongjidongMarkers {
+            marker.mapView = nil
+        }
+        
         for marker in jungangdongMarkers {
             marker.mapView = nil
         }
@@ -62,12 +75,20 @@ class PolygonOverlayViewController: MapViewController {
         }
         
         // 실제 사용 예시
-        let seongidongJson = load(from: "seongjidong")  // 파일 이름에 맞게 변경 필요
-        if let coordinates = parseJSON(from: seongidongJson) {
-            seongidongCoordinate = coordinates
-            print("#1 디코딩 성공")
+        let seongjidongJson = load(from: "seongjidong")  // 파일 이름에 맞게 변경 필요
+        if let coordinates = parseJSON(from: seongjidongJson) {
+            seongjidongCoordinate = coordinates
+            print("#2 디코딩 성공")
         } else {
-            print("#1 Failed to parse JSON")
+            print("#2 Failed to parse JSON")
+        }
+
+        let chilamdongJson = load(from: "chilamdong")  // 파일 이름에 맞게 변경 필요
+        if let coordinates = parseJSON(from: chilamdongJson) {
+            chilamdongCoordinate = coordinates
+            print("#2 디코딩 성공")
+        } else {
+            print("#2 Failed to parse JSON")
         }
     }
     
@@ -216,64 +237,53 @@ class PolygonOverlayViewController: MapViewController {
         }
         
         
-        DispatchQueue.global(qos: .default).async {
-            // 백그라운드 스레드
-            var polyongLatLng = [NMGLatLng]()
-            for (latitude, longitude) in JinJuMapData.chilamdongMarkers {
-                let nLatLng = NMGLatLng(lat: latitude, lng: longitude)
-                polyongLatLng.append(nLatLng)
-            }
-            
-            let polygon = NMGPolygon(ring: NMGLineString(points: polyongLatLng))
-            let polygonOverlay = NMFPolygonOverlay(polygon as! NMGPolygon<AnyObject>)
-            polygonOverlay?.fillColor = .clear
-            polygonOverlay?.outlineColor = .magenta
-            polygonOverlay?.outlineWidth = 4
-            
-            DispatchQueue.main.async { [weak self] in
-                polygonOverlay?.mapView = self?.mapView
-            }
-        }
+//        DispatchQueue.global(qos: .default).async {
+//            // 백그라운드 스레드
+//            var polyongLatLng = [NMGLatLng]()
+//            for (latitude, longitude) in JinJuMapData.chilamdongMarkers {
+//                let nLatLng = NMGLatLng(lat: latitude, lng: longitude)
+//                polyongLatLng.append(nLatLng)
+//            }
+//            
+//            let polygon = NMGPolygon(ring: NMGLineString(points: polyongLatLng))
+//            let polygonOverlay = NMFPolygonOverlay(polygon as! NMGPolygon<AnyObject>)
+//            polygonOverlay?.fillColor = .clear
+//            polygonOverlay?.outlineColor = .magenta
+//            polygonOverlay?.outlineWidth = 4
+//            polygonOverlay?.mapView = mapView
+//            
+//            DispatchQueue.main.async { [weak self] in
+//                polygonOverlay?.mapView = self?.mapView
+//            }
+//        }
+
     }
     
     func setupMarker() {
         
-        DispatchQueue.global(qos: .default).async {
-            // 백그라운드 스레드
-            var markers = [NMFMarker]()
-            let markersIcon = NMFOverlayImage(name: "marker_star")  // 마커 아이콘 설정
-
-            for (latitude, longitude) in JinJuMapData.chilamdongMarkers {
-                let position = NMGLatLng(lat: latitude, lng: longitude)
-                let marker = NMFMarker(position: position)
-                marker.iconImage = markersIcon
-                markers.append(marker)
-            }
-
-            DispatchQueue.main.async { [weak self] in
-                // 메인 스레드
-                for marker in markers {
-                    marker.mapView = self?.mapView
-                }
-            }
-        }
-
-        seongidongMarkers = []  // MARK: 메모리 해제 필요
-        createMarkers(for: seongidongCoordinate, mapView: mapView) { [weak self] newMarkers in
+        _ = chilamdongMarkers.map { $0.mapView = nil }
+        chilamdongMarkers.removeAll()
+        createMarkers(for: chilamdongCoordinate, mapView: mapView) { [weak self] newMarkers in
             guard let wSelf = self else { return }
-            wSelf.seongidongMarkers = newMarkers
+            wSelf.chilamdongMarkers = newMarkers
         }
 
+        _ = seongjidongMarkers.map { $0.mapView = nil }
+        seongjidongMarkers.removeAll()
+        createMarkers(for: seongjidongCoordinate, mapView: mapView) { [weak self] newMarkers in
+            guard let wSelf = self else { return }
+            wSelf.seongjidongMarkers = newMarkers
+        }
 
-        // 마커 생성 및 업데이트
-        jungangdongMarkers = [] // MARK: 메모리 해제 필요
+        _ = jungangdongMarkers.map { $0.mapView = nil }
+        jungangdongMarkers.removeAll()
         createMarkers(for: jungangdongCoordinate, mapView: mapView) { [weak self] newMarkers in
             guard let wSelf = self else { return }
             wSelf.jungangdongMarkers = newMarkers
         }
     }
     
-    func createMarkers(for coordinates: [MapCoordinateModel], mapView: NMFMapView?, markers: @escaping ([NMFMarker]) -> Void) {
+    func createMarkers(for coordinates: [CoordinateModel], mapView: NMFMapView?, markers: @escaping ([NMFMarker]) -> Void) {
 
         DispatchQueue.global(qos: .default).async { [weak self, weak mapView] in
             guard let wSelf = self else { return }
@@ -301,6 +311,29 @@ class PolygonOverlayViewController: MapViewController {
         }
     }
     
+    func addPolygonOverlay(coordinates: [CoordinateModel], mapView: NMFMapView?, fillColor: UIColor = .clear, outlineColor: UIColor = .green, outlineWidth: UInt = 4) {
+        // 좌표 데이터를 NMGLatLng로 변환
+        var polygonLatLng = [NMGLatLng]()
+        for coordinate in coordinates {
+            let position = NMGLatLng(lat: coordinate.latitude, lng: coordinate.longitude)
+            polygonLatLng.append(position)
+        }
+
+        // 다각형 생성
+        let polygon = NMGPolygon(ring: NMGLineString(points: polygonLatLng))
+        let polygonOverlay = NMFPolygonOverlay(polygon as! NMGPolygon<AnyObject>)
+        polygonOverlay?.fillColor = fillColor
+        polygonOverlay?.outlineColor = outlineColor
+        polygonOverlay?.outlineWidth = outlineWidth
+
+        polygonOverlay?.mapView = mapView
+    }
+
+//    // 사용 예시
+//    addPolygonOverlay(coordinates: JinJuMapData.chilamdongMarkers, mapView: mapView)
+//
+
+    
     
     // 두 좌표 사이의 유클리드 거리 계산 함수
     func calculateDistance(from: NMGLatLng, to: NMGLatLng) -> Double {
@@ -310,12 +343,12 @@ class PolygonOverlayViewController: MapViewController {
     }
 
     // 중앙 좌표에서 가장 가까운 마커 찾기
-    func findNearestMarker(from center: NMGLatLng, markers: [(Double, Double)]) -> NMGLatLng {
-        var nearestMarker: NMGLatLng = NMGLatLng(lat: markers[0].0, lng: markers[0].1)
+    func findNearestMarker(from center: NMGLatLng, markers: [CoordinateModel]) -> NMGLatLng {
+        var nearestMarker: NMGLatLng = NMGLatLng(lat: markers[0].latitude, lng: markers[0].longitude)
         var minDistance = calculateDistance(from: center, to: nearestMarker)
 
-        for (latitude, longitude) in markers {
-            let markerLatLng = NMGLatLng(lat: latitude, lng: longitude)
+        for coordinate in markers {
+            let markerLatLng = NMGLatLng(lat: coordinate.latitude, lng: coordinate.longitude)
             let distance = calculateDistance(from: center, to: markerLatLng)
             
             if distance < minDistance {
@@ -361,12 +394,12 @@ class PolygonOverlayViewController: MapViewController {
         }
     }
 
-    // JSON 문자열을 [MapCoordinateModel]로 변환하는 함수
-    func parseJSON(from jsonString: String) -> [MapCoordinateModel]? {
+    // JSON 문자열을 [CoordinateModel]로 변환하는 함수
+    func parseJSON(from jsonString: String) -> [CoordinateModel]? {
         guard let jsonData = jsonString.data(using: .utf8) else { return nil }
         
         do {
-            let decodedData = try JSONDecoder().decode([MapCoordinateModel].self, from: jsonData)
+            let decodedData = try JSONDecoder().decode([CoordinateModel].self, from: jsonData)
             return decodedData
         } catch {
             print("Error decoding JSON: \(error.localizedDescription)")
@@ -384,7 +417,7 @@ extension PolygonOverlayViewController: NMFMapViewCameraDelegate {
         centralMarker?.position = centerLatLng
         
         // 가장 가까운 마커 찾기
-        let nearestMarkerPosition = findNearestMarker(from: centerLatLng, markers: JinJuMapData.chilamdongMarkers)
+        let nearestMarkerPosition = findNearestMarker(from: centerLatLng, markers: chilamdongCoordinate)
         
         // 경로 그리기
         drawLine(from: centerLatLng, to: nearestMarkerPosition)

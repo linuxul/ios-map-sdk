@@ -9,7 +9,7 @@
 import Foundation
 
 // 좌표를 나타내는 Codable 구조체
-struct MapCoordinateModel: Codable {
+struct CoordinateModel: Codable {
     let latitude: Double
     let longitude: Double
 }

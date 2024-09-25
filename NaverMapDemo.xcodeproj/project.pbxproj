@@ -12,8 +12,9 @@
 		2D704C042CA3D51A00DE8D16 /* MunSanMapData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D704C032CA3D51A00DE8D16 /* MunSanMapData.swift */; };
 		2D704C062CA3D58900DE8D16 /* NaedongMapData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D704C052CA3D58900DE8D16 /* NaedongMapData.swift */; };
 		2D704C102CA3DCB700DE8D16 /* jungangdong.json in Resources */ = {isa = PBXBuildFile; fileRef = 2D704C0F2CA3DCB700DE8D16 /* jungangdong.json */; };
-		2D704C132CA3F0F500DE8D16 /* MapCoordinateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D704C122CA3F0F500DE8D16 /* MapCoordinateModel.swift */; };
+		2D704C132CA3F0F500DE8D16 /* CoordinateModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D704C122CA3F0F500DE8D16 /* CoordinateModel.swift */; };
 		2D704C152CA4014B00DE8D16 /* seongjidong.json in Resources */ = {isa = PBXBuildFile; fileRef = 2D704C142CA4014B00DE8D16 /* seongjidong.json */; };
+		2D704C172CA4048500DE8D16 /* chilamdong.json in Resources */ = {isa = PBXBuildFile; fileRef = 2D704C162CA4048500DE8D16 /* chilamdong.json */; };
 		431076CF215A49F0008F170F /* ContentPaddingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431076CE215A49F0008F170F /* ContentPaddingViewController.swift */; };
 		431076D1215A50F1008F170F /* ControlSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431076D0215A50F1008F170F /* ControlSettingsViewController.swift */; };
 		431076D5215A6DE5008F170F /* GestureSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 431076D4215A6DE5008F170F /* GestureSettingsViewController.swift */; };
@@ -116,8 +117,9 @@
 		2D704C032CA3D51A00DE8D16 /* MunSanMapData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MunSanMapData.swift; sourceTree = "<group>"; };
 		2D704C052CA3D58900DE8D16 /* NaedongMapData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NaedongMapData.swift; sourceTree = "<group>"; };
 		2D704C0F2CA3DCB700DE8D16 /* jungangdong.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = jungangdong.json; sourceTree = "<group>"; };
-		2D704C122CA3F0F500DE8D16 /* MapCoordinateModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapCoordinateModel.swift; sourceTree = "<group>"; };
+		2D704C122CA3F0F500DE8D16 /* CoordinateModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoordinateModel.swift; sourceTree = "<group>"; };
 		2D704C142CA4014B00DE8D16 /* seongjidong.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = seongjidong.json; sourceTree = "<group>"; };
+		2D704C162CA4048500DE8D16 /* chilamdong.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = chilamdong.json; sourceTree = "<group>"; };
 		431076CE215A49F0008F170F /* ContentPaddingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentPaddingViewController.swift; sourceTree = "<group>"; };
 		431076D0215A50F1008F170F /* ControlSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ControlSettingsViewController.swift; sourceTree = "<group>"; };
 		431076D4215A6DE5008F170F /* GestureSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureSettingsViewController.swift; sourceTree = "<group>"; };
@@ -235,6 +237,7 @@
 		2D704C0E2CA3DCB700DE8D16 /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				2D704C162CA4048500DE8D16 /* chilamdong.json */,
 				2D704C0F2CA3DCB700DE8D16 /* jungangdong.json */,
 				2D704C142CA4014B00DE8D16 /* seongjidong.json */,
 			);
@@ -244,7 +247,7 @@
 		2D704C112CA3F0F500DE8D16 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				2D704C122CA3F0F500DE8D16 /* MapCoordinateModel.swift */,
+				2D704C122CA3F0F500DE8D16 /* CoordinateModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -566,6 +569,7 @@
 				438AA5F0213D416A004D1053 /* Main.storyboard in Resources */,
 				431076DA215A74C3008F170F /* MapEvent.storyboard in Resources */,
 				43D95ACC213FA03000F19CE1 /* Overlay.storyboard in Resources */,
+				2D704C172CA4048500DE8D16 /* chilamdong.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -671,7 +675,7 @@
 				43F9639B2199792E009DAF98 /* LiteModeViewController.swift in Sources */,
 				438AA613213D4D8C004D1053 /* MapViewController.swift in Sources */,
 				43C5169F215507DE00D36718 /* LocaleViewController.swift in Sources */,
-				2D704C132CA3F0F500DE8D16 /* MapCoordinateModel.swift in Sources */,
+				2D704C132CA3F0F500DE8D16 /* CoordinateModel.swift in Sources */,
 				CEFA47D7239DF3D500835034 /* MapViewCreatedInCodeController.swift in Sources */,
 				431AF94221467A860031DCDE /* CircleOverlayViewController.swift in Sources */,
 				43D95ACE213FB4E000F19CE1 /* OverlayCollisionViewController.swift in Sources */,
