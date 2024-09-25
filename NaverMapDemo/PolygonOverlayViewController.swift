@@ -428,30 +428,18 @@ extension PolygonOverlayViewController: NMFMapViewCameraDelegate {
         let centerLatLng = mapView.cameraPosition.target
         centralMarker?.position = centerLatLng
         
-        var allMarkers = [CoordinateModel]()
-        
-        for coordinate in munsaneupCoordinate {
-            allMarkers.append(coordinate)
-        }
-        for coordinate in naedongmyeonCoordinate {
-            allMarkers.append(coordinate)
-        }
-        for coordinate in manggyeongdongCoordinate {
-            allMarkers.append(coordinate)
-        }
-        for coordinate in kangnamdongCoordinate {
-            allMarkers.append(coordinate)
-        }
-        for coordinate in chilamdongCoordinate {
-            allMarkers.append(coordinate)
-        }
-        for coordinate in seongjidongCoordinate {
-            allMarkers.append(coordinate)
-        }
-        for coordinate in jungangdongCoordinate {
-            allMarkers.append(coordinate)
-        }
-        
+        // 모든 마커 배열을 통합
+        let allMarkers = combineCoordinates(
+            coordinatesList: [
+                munsaneupCoordinate,
+                naedongmyeonCoordinate,
+                manggyeongdongCoordinate,
+                kangnamdongCoordinate,
+                chilamdongCoordinate,
+                seongjidongCoordinate,
+                jungangdongCoordinate
+            ]
+        )
         
         // 가장 가까운 마커 찾기
         guard let nearestMarkerPosition = findNearestMarker(from: centerLatLng, coordinates: allMarkers) else {
@@ -459,5 +447,10 @@ extension PolygonOverlayViewController: NMFMapViewCameraDelegate {
         }
         
         drawLine(from: centerLatLng, to: nearestMarkerPosition)
+    }
+    
+    // 여러 배열을 하나로 합치는 함수
+    func combineCoordinates(coordinatesList: [[CoordinateModel]]) -> [CoordinateModel] {
+        return coordinatesList.flatMap { $0 }
     }
 }
