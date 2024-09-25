@@ -40,18 +40,20 @@ class PolygonOverlayViewController: MapViewController {
     var chilamdongCoordinate = [CoordinateModel]()
     var chilamdongMarkers = [NMFMarker]()
     
+    var seongjidongPolygonOverlays: NMFPolygonOverlay?
     var seongjidongCoordinate = [CoordinateModel]()
     var seongjidongMarkers = [NMFMarker]()
     
+    var jungangdongPolygonOverlays: NMFPolygonOverlay?
     var jungangdongCoordinate = [CoordinateModel]()
     var jungangdongMarkers = [NMFMarker]()
 
     let markersDefaultIcon = NMFOverlayImage(name: "marker_star")  // 마커 아이콘 설정
     
     let defaultExtnt: NMGLatLngBounds = NMGLatLngBounds(southWestLat: 31.43,
-                                                               southWestLng: 122.37,
-                                                               northEastLat: 44.35,
-                                                               northEastLng: 132)
+                                                        southWestLng: 122.37,
+                                                        northEastLat: 44.35,
+                                                        northEastLng: 132)
     
     /// 최소 줌레벨
     let defaultMinZoomLevel: Double = 5
@@ -91,65 +93,26 @@ class PolygonOverlayViewController: MapViewController {
     }
     
     func readJsonFile() {
+        loadAndParseJSON(from: "jungangdong", into: &jungangdongCoordinate)
+        loadAndParseJSON(from: "seongjidong", into: &seongjidongCoordinate)
+        loadAndParseJSON(from: "chilamdong", into: &chilamdongCoordinate)
+        loadAndParseJSON(from: "kangnamdong", into: &kangnamdongCoordinate)
+        loadAndParseJSON(from: "manggyeongdong", into: &manggyeongdongCoordinate)
+        loadAndParseJSON(from: "naedongmyeon", into: &naedongmyeonCoordinate)
+        loadAndParseJSON(from: "munsaneup", into: &munsaneupCoordinate)
+    }
 
-        // 실제 사용 예시
-        let jungangdongJson = load(from: "jungangdong")
-        if let coordinates = parseJSON(from: jungangdongJson) {
-            jungangdongCoordinate = coordinates
-            print("#1 디코딩 성공")
-        } else {
-            print("#1 Failed to parse JSON")
-        }
+    private func loadAndParseJSON(from fileName: String, into coordinates: inout [CoordinateModel]) {
+        let jsonString = load(from: fileName)
         
-        // 실제 사용 예시
-        let seongjidongJson = load(from: "seongjidong")
-        if let coordinates = parseJSON(from: seongjidongJson) {
-            seongjidongCoordinate = coordinates
-            print("#2 디코딩 성공")
+        if let parsedCoordinates = parseJSON(from: jsonString) {
+            coordinates = parsedCoordinates
+            print("\(fileName) 디코딩 성공")
         } else {
-            print("#2 Failed to parse JSON")
-        }
-
-        let chilamdongJson = load(from: "chilamdong")
-        if let coordinates = parseJSON(from: chilamdongJson) {
-            chilamdongCoordinate = coordinates
-            print("#3 디코딩 성공")
-        } else {
-            print("#3 Failed to parse JSON")
-        }
-        
-        let kangnamdongJson = load(from: "kangnamdong")
-        if let coordinates = parseJSON(from: kangnamdongJson) {
-            kangnamdongCoordinate = coordinates
-            print("#4 디코딩 성공")
-        } else {
-            print("#4 Failed to parse JSON")
-        }
-        
-        let manggyeongdongJson = load(from: "manggyeongdong")
-        if let coordinates = parseJSON(from: manggyeongdongJson) {
-            manggyeongdongCoordinate = coordinates
-            print("#5 디코딩 성공")
-        } else {
-            print("#5 Failed to parse JSON")
-        }
-        
-        let naedongmyeonJson = load(from: "naedongmyeon")
-        if let coordinates = parseJSON(from: naedongmyeonJson) {
-            naedongmyeonCoordinate = coordinates
-            print("#6 디코딩 성공")
-        } else {
-            print("#6 Failed to parse JSON")
-        }
-        
-        let munsaneupJson = load(from: "munsaneup")
-        if let coordinates = parseJSON(from: munsaneupJson) {
-            munsaneupCoordinate = coordinates
-            print("#7 디코딩 성공")
-        } else {
-            print("#7 Failed to parse JSON")
+            print("\(fileName) Failed to parse JSON")
         }
     }
+
     
     func setupMapConfig() {
         
@@ -207,11 +170,32 @@ class PolygonOverlayViewController: MapViewController {
                 kangnamdongLatlng.append(position)
             }
             
+            var chilamdongLatlng = [NMGLatLng]()
+            for coordinate in wSelf.chilamdongCoordinate {
+                let position = NMGLatLng(lat: coordinate.latitude, lng: coordinate.longitude)
+                chilamdongLatlng.append(position)
+            }
+            
+            var seongjidongLatlng = [NMGLatLng]()
+            for coordinate in wSelf.seongjidongCoordinate {
+                let position = NMGLatLng(lat: coordinate.latitude, lng: coordinate.longitude)
+                seongjidongLatlng.append(position)
+            }
+            
+            var jungangdongLatlng = [NMGLatLng]()
+            for coordinate in wSelf.jungangdongCoordinate {
+                let position = NMGLatLng(lat: coordinate.latitude, lng: coordinate.longitude)
+                jungangdongLatlng.append(position)
+            }
+            
             let polygon2 = NMGPolygon(ring: NMGLineString(points: outerCoordinatesLatlng),
                                       interiorRings: [NMGLineString(points: munsaneupLatlng),
                                                       NMGLineString(points: naedongmyeonLatlng),
                                                       NMGLineString(points: manggyeongdongLatlng),
-                                                      NMGLineString(points: kangnamdongLatlng)])
+                                                      NMGLineString(points: kangnamdongLatlng),
+                                                      NMGLineString(points: chilamdongLatlng),
+                                                      NMGLineString(points: seongjidongLatlng),
+                                                      NMGLineString(points: jungangdongLatlng)])
             let polygonWithHole = NMFPolygonOverlay(polygon2 as! NMGPolygon<AnyObject>)
             polygonWithHole?.fillColor = UIColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 127.0/255.0)
             
@@ -242,7 +226,14 @@ class PolygonOverlayViewController: MapViewController {
         if let polygonOverlay = addPolygonOverlay(coordinates: chilamdongCoordinate, mapView: mapView, fillColor: .clear, outlineColor: .magenta, outlineWidth: 4) {
             chilamdongPolygonOverlays = polygonOverlay
         }
-
+        
+        if let polygonOverlay = addPolygonOverlay(coordinates: seongjidongCoordinate, mapView: mapView, fillColor: .clear, outlineColor: .cyan, outlineWidth: 4) {
+            seongjidongPolygonOverlays = polygonOverlay
+        }
+        
+        if let polygonOverlay = addPolygonOverlay(coordinates: jungangdongCoordinate, mapView: mapView, fillColor: .clear, outlineColor: .orange, outlineWidth: 4) {
+            jungangdongPolygonOverlays = polygonOverlay
+        }
     }
     
     func setupMarker() {
