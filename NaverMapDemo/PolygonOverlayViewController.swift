@@ -26,16 +26,20 @@ class PolygonOverlayViewController: MapViewController {
 
     var munsaneupPolygonOverlays: NMFPolygonOverlay?
     var munsaneupCoordinate = [CoordinateModel]()
-
+    var munsaneupMarkers = [NMFMarker]()
+    
     var naedongmyeonPolygonOverlays: NMFPolygonOverlay?
     var naedongmyeonCoordinate = [CoordinateModel]()
-
+    var naedongmyeonMarkers = [NMFMarker]()
+    
     var manggyeongdongPolygonOverlays: NMFPolygonOverlay?
     var manggyeongdongCoordinate = [CoordinateModel]()
+    var manggyeongdongMarkers = [NMFMarker]()
     
     var kangnamdongPolygonOverlays: NMFPolygonOverlay?
     var kangnamdongCoordinate = [CoordinateModel]()
-
+    var kangnamdongMarkers = [NMFMarker]()
+    
     var chilamdongPolygonOverlays: NMFPolygonOverlay?
     var chilamdongCoordinate = [CoordinateModel]()
     var chilamdongMarkers = [NMFMarker]()
@@ -207,36 +211,64 @@ class PolygonOverlayViewController: MapViewController {
     
     func setupPolygon() {
         
-        if let polygonOverlay = addPolygonOverlay(coordinates: munsaneupCoordinate, mapView: mapView, fillColor: .clear, outlineColor: .red, outlineWidth: 4) {
+        if let polygonOverlay = addPolygonOverlay(coordinates: munsaneupCoordinate, mapView: mapView, fillColor: .clear, outlineColor: .red, outlineWidth: 5) {
             munsaneupPolygonOverlays = polygonOverlay
         }
         
-        if let polygonOverlay = addPolygonOverlay(coordinates: naedongmyeonCoordinate, mapView: mapView, fillColor: .clear, outlineColor: .blue, outlineWidth: 4) {
+        if let polygonOverlay = addPolygonOverlay(coordinates: naedongmyeonCoordinate, mapView: mapView, fillColor: .clear, outlineColor: .blue, outlineWidth: 5) {
             naedongmyeonPolygonOverlays = polygonOverlay
         }
         
-        if let polygonOverlay = addPolygonOverlay(coordinates: manggyeongdongCoordinate, mapView: mapView, fillColor: .clear, outlineColor: .yellow, outlineWidth: 4) {
+        if let polygonOverlay = addPolygonOverlay(coordinates: manggyeongdongCoordinate, mapView: mapView, fillColor: .clear, outlineColor: .yellow, outlineWidth: 5) {
             manggyeongdongPolygonOverlays = polygonOverlay
         }
         
-        if let polygonOverlay = addPolygonOverlay(coordinates: kangnamdongCoordinate, mapView: mapView, fillColor: .clear, outlineColor: .brown, outlineWidth: 4) {
+        if let polygonOverlay = addPolygonOverlay(coordinates: kangnamdongCoordinate, mapView: mapView, fillColor: .clear, outlineColor: .brown, outlineWidth: 5) {
             kangnamdongPolygonOverlays = polygonOverlay
         }
         
-        if let polygonOverlay = addPolygonOverlay(coordinates: chilamdongCoordinate, mapView: mapView, fillColor: .clear, outlineColor: .magenta, outlineWidth: 4) {
+        if let polygonOverlay = addPolygonOverlay(coordinates: chilamdongCoordinate, mapView: mapView, fillColor: .clear, outlineColor: .magenta, outlineWidth: 5) {
             chilamdongPolygonOverlays = polygonOverlay
         }
         
-        if let polygonOverlay = addPolygonOverlay(coordinates: seongjidongCoordinate, mapView: mapView, fillColor: .clear, outlineColor: .cyan, outlineWidth: 4) {
+        if let polygonOverlay = addPolygonOverlay(coordinates: seongjidongCoordinate, mapView: mapView, fillColor: .clear, outlineColor: .cyan, outlineWidth: 5) {
             seongjidongPolygonOverlays = polygonOverlay
         }
         
-        if let polygonOverlay = addPolygonOverlay(coordinates: jungangdongCoordinate, mapView: mapView, fillColor: .clear, outlineColor: .orange, outlineWidth: 4) {
+        if let polygonOverlay = addPolygonOverlay(coordinates: jungangdongCoordinate, mapView: mapView, fillColor: .clear, outlineColor: .orange, outlineWidth: 5) {
             jungangdongPolygonOverlays = polygonOverlay
         }
     }
     
     func setupMarker() {
+        
+        _ = munsaneupMarkers.map { $0.mapView = nil }
+        munsaneupMarkers.removeAll()
+        createMarkers(for: munsaneupCoordinate, mapView: mapView) { [weak self] newMarkers in
+            guard let wSelf = self else { return }
+            wSelf.munsaneupMarkers = newMarkers
+        }
+        
+        _ = naedongmyeonMarkers.map { $0.mapView = nil }
+        naedongmyeonMarkers.removeAll()
+        createMarkers(for: naedongmyeonCoordinate, mapView: mapView) { [weak self] newMarkers in
+            guard let wSelf = self else { return }
+            wSelf.naedongmyeonMarkers = newMarkers
+        }
+        
+        _ = manggyeongdongMarkers.map { $0.mapView = nil }
+        manggyeongdongMarkers.removeAll()
+        createMarkers(for: manggyeongdongCoordinate, mapView: mapView) { [weak self] newMarkers in
+            guard let wSelf = self else { return }
+            wSelf.manggyeongdongMarkers = newMarkers
+        }
+        
+        _ = kangnamdongMarkers.map { $0.mapView = nil }
+        kangnamdongMarkers.removeAll()
+        createMarkers(for: kangnamdongCoordinate, mapView: mapView) { [weak self] newMarkers in
+            guard let wSelf = self else { return }
+            wSelf.kangnamdongMarkers = newMarkers
+        }
         
         _ = chilamdongMarkers.map { $0.mapView = nil }
         chilamdongMarkers.removeAll()
@@ -396,8 +428,33 @@ extension PolygonOverlayViewController: NMFMapViewCameraDelegate {
         let centerLatLng = mapView.cameraPosition.target
         centralMarker?.position = centerLatLng
         
+        var allMarkers = [CoordinateModel]()
+        
+        for coordinate in munsaneupCoordinate {
+            allMarkers.append(coordinate)
+        }
+        for coordinate in naedongmyeonCoordinate {
+            allMarkers.append(coordinate)
+        }
+        for coordinate in manggyeongdongCoordinate {
+            allMarkers.append(coordinate)
+        }
+        for coordinate in kangnamdongCoordinate {
+            allMarkers.append(coordinate)
+        }
+        for coordinate in chilamdongCoordinate {
+            allMarkers.append(coordinate)
+        }
+        for coordinate in seongjidongCoordinate {
+            allMarkers.append(coordinate)
+        }
+        for coordinate in jungangdongCoordinate {
+            allMarkers.append(coordinate)
+        }
+        
+        
         // 가장 가까운 마커 찾기
-        guard let nearestMarkerPosition = findNearestMarker(from: centerLatLng, coordinates: chilamdongCoordinate) else {
+        guard let nearestMarkerPosition = findNearestMarker(from: centerLatLng, coordinates: allMarkers) else {
             return
         }
         
