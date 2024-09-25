@@ -24,9 +24,21 @@ class PolygonOverlayViewController: MapViewController {
     var centralMarker: NMFMarker?
     var polyline: NMFPolylineOverlay?
     
+    var jungangdongCoordinate = [MapCoordinateModel]()
+    var jungangdongMarkers = [NMFMarker]()
+    let markersDefaultIcon = NMFOverlayImage(name: "baseline_room_black_24pt")  // 마커 아이콘 설정
+    
+    deinit {
+        // 메모리 삭제
+        for marker in jungangdongMarkers {
+            marker.mapView = nil
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        readJsonFile()
         setupMapConfig()
         setupGolygonArea()
         setupPolygon()
@@ -34,9 +46,22 @@ class PolygonOverlayViewController: MapViewController {
         setupNearestMarker()
     }
     
+    func readJsonFile() {
+
+        // 실제 사용 예시
+        let jsonString = load(from: "jungangdong")  // 파일 이름에 맞게 변경 필요
+        if let coordinates = parseJSON(from: jsonString) {
+            jungangdongCoordinate = coordinates
+            print(coordinates)  // 디코딩된 좌표 리스트 출력
+        } else {
+            print("Failed to parse JSON")
+        }
+    }
+    
     func setupMapConfig() {
         
         naverMapView.showLocationButton = true
+        
     }
     
     func setupNearestMarker() {
@@ -220,46 +245,61 @@ class PolygonOverlayViewController: MapViewController {
             }
         }
         
-        DispatchQueue.global(qos: .default).async {
-            // 백그라운드 스레드
-            var markers = [NMFMarker]()
-            let markersIcon = NMFOverlayImage(name: "baseline_room_black_24pt")  // 마커 아이콘 설정
+//        DispatchQueue.global(qos: .default).async {
+//            // 백그라운드 스레드
+//            var markers = [NMFMarker]()
+//
+//            for (latitude, longitude) in JinJuMapData.seongjidongMarkers {
+//                let position = NMGLatLng(lat: latitude, lng: longitude)
+//                let marker = NMFMarker(position: position)
+//                marker.iconImage = markersDefaultIcon
+//                markers.append(marker)
+//            }
+//
+//            DispatchQueue.main.async { [weak self] in
+//                // 메인 스레드
+//                for marker in markers {
+//                    marker.mapView = self?.mapView
+//                }
+//            }
+//        }
 
-            for (latitude, longitude) in JinJuMapData.seongjidongMarkers {
-                let position = NMGLatLng(lat: latitude, lng: longitude)
-                let marker = NMFMarker(position: position)
-                marker.iconImage = markersIcon
-                markers.append(marker)
-            }
-
-            DispatchQueue.main.async { [weak self] in
-                // 메인 스레드
-                for marker in markers {
-                    marker.mapView = self?.mapView
-                }
-            }
+        // 마커 생성 및 업데이트
+        jungangdongMarkers = []
+        createMarkers(for: jungangdongCoordinate, mapView: mapView) { [weak self] newMarkers in
+            guard let wSelf = self else { return }
+            wSelf.jungangdongMarkers.append(contentsOf: newMarkers)
         }
+    }
+    
+    func createMarkers(for coordinates: [MapCoordinateModel], mapView: NMFMapView?, markers: @escaping ([NMFMarker]) -> Void) {
 
-        DispatchQueue.global(qos: .default).async {
-            // 백그라운드 스레드
-            var markers = [NMFMarker]()
-            let markersIcon = NMFOverlayImage(name: "mSNormalBlue")  // 마커 아이콘 설정
+        DispatchQueue.global(qos: .default).async { [weak self, weak mapView] in
+            guard let wSelf = self else { return }
+            
+            var tempMarkers = [NMFMarker]()  // 임시 마커 배열
 
-            for (latitude, longitude) in JinJuMapData.jungangdongMarkers {
-                let position = NMGLatLng(lat: latitude, lng: longitude)
+            for coordinate in coordinates {
+                let position = NMGLatLng(lat: coordinate.latitude, lng: coordinate.longitude)
                 let marker = NMFMarker(position: position)
-                marker.iconImage = markersIcon
-                markers.append(marker)
+                marker.iconImage = wSelf.markersDefaultIcon     // 메모리 관리를 위해서 하나의 이미지로 사용
+                tempMarkers.append(marker)
             }
 
-            DispatchQueue.main.async { [weak self] in
-                // 메인 스레드
-                for marker in markers {
-                    marker.mapView = self?.mapView
+            DispatchQueue.main.async {
+                guard let mapView = mapView else { return }
+
+                // 마커들을 메인 스레드에서 설정
+                for marker in tempMarkers {
+                    marker.mapView = mapView
                 }
+
+                // markers 배열 업데이트
+                markers(tempMarkers)
             }
         }
     }
+    
     
     // 두 좌표 사이의 유클리드 거리 계산 함수
     func calculateDistance(from: NMGLatLng, to: NMGLatLng) -> Double {
@@ -305,6 +345,33 @@ class PolygonOverlayViewController: MapViewController {
         mapView.moveCamera(NMFCameraUpdate(scrollTo: jinjuCityHallPosition))
     }
     
+    
+    // JSON 파일을 로드하는 함수
+    func load(from fileName: String, extensionType: String = "json") -> String {
+        guard let fileLocation = Bundle.main.url(forResource: fileName, withExtension: extensionType) else { return "" }
+        
+        do {
+            let jsonData = try Data(contentsOf: fileLocation)
+            let jsonString = String(data: jsonData, encoding: .utf8) ?? ""
+            return jsonString
+        } catch {
+            print("Error loading JSON file: \(error.localizedDescription)")
+            return ""
+        }
+    }
+
+    // JSON 문자열을 [MapCoordinateModel]로 변환하는 함수
+    func parseJSON(from jsonString: String) -> [MapCoordinateModel]? {
+        guard let jsonData = jsonString.data(using: .utf8) else { return nil }
+        
+        do {
+            let decodedData = try JSONDecoder().decode([MapCoordinateModel].self, from: jsonData)
+            return decodedData
+        } catch {
+            print("Error decoding JSON: \(error.localizedDescription)")
+            return nil
+        }
+    }
 
 }
 
